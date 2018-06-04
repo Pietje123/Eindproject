@@ -19,10 +19,14 @@ Main features:
 
 Allemaal zijn mvp
 
+Visualitatie:
+
+![](doc/proposal.jpg)
+
 Dataset:
 
 http://www.astronexus.com/hyg (versie 2)
-Hoogstwaarschijnlijk moet ik de dataset veranderen omdat ik de data graag op mijn manier wil hebben.
+hoogst waarschijnlijk moet ik de dataset veranderen omdat ik de data graag op mijn manier wil hebben.
 
 External components:
 
