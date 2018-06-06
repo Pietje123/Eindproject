@@ -9,12 +9,12 @@ Deze visualisatie tracht de gebruiker een beter beeld te geven van ontdekte ster
 
 Solution:
 
-Een scatterplot en als je over een ster hovert dan krijg je de naam mits deze bekend is anders de ster ID. Als er wordt geklikt op een ster dan wordt er een barchart gemaakt met data (AbsMag, Colorindex,Spectrum,Velocity). Als derde visualizatie wordt een radar chart gemaakt van de afstand tot de ster, de hoeveelheid benzine die een Fiat Panda (0.9TwinAir MT-5 63 kW/85 pk 4X4) nodig heeft om die afstand af te leggen, de tijd die de auto nodig heeft en de (schijnbare) magnitude.
+Een scatterplot en als je over een ster hovert dan krijg je de naam mits deze bekend is, anders de ster ID. Als er wordt geklikt op een ster dan wordt er een barchart gemaakt met data (AbsMag, Colorindex,Spectrum,Velocity). Als derde visualizatie wordt een radar chart gemaakt van de afstand tot de ster, de hoeveelheid benzine die een Fiat Panda (0.9TwinAir MT-5 63 kW/85 pk 4X4) nodig heeft om die afstand af te leggen, de tijd die de auto nodig heeft (met 100 km/h)en de (schijnbare) magnitude.
 In de scatterplot kan worden gekozen om slechts bepaalde type sterren te laten zien. Ook kan er worden gekozen om alleen sterren vanaf / tot een bepaalde afstand te laten zien.
 
 Main features:
 
-	- scatterplot (op de y-as de absolute magnitude en de kleurindex op de x-as)
+	- scatterplot (op de y-as de absolute magnitude en de kleurindex of het type ster op de x-as)
 	- barchart (de absolute magnitude, kleurindex, type ster en de snelheid)
 	- radar chart (afstand, hoeveelheid benzine, tijd, schijnbare magnitude)
 

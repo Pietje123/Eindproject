@@ -8,7 +8,7 @@ Aangepast met converter.py
 
 Technical Components:
 
-	- Scatterplot met logaritmische y-as van de absolute magnitude (AbsMag) en lineaire x-as van de kleurindex (ColorIndex).
+	- Scatterplot met logaritmische y-as van de absolute magnitude (AbsMag) en lineaire x-as van de kleurindex (ColorIndex) of het type ster (Spectrum).
 	  Als er op een ster wordt geklikt dan wordt er een barchart gemaakt.
 	- Een barchart met een deel van de overige data en de x en y coordinaten (AbsMag, Colorindex,Spectrum, Velocity).
 	  Titel van de barchart is de naam van de ster als deze bekent is, anders de ID van de ster.
@@ -18,14 +18,16 @@ Technical Components:
 
 Scripts / Functies:
 
-	- Scatterplot.js met daarin makeScatter die de scatterplot maakt en alle interactieve elementen maakt. Als er later nog een idee komt voor het veranderen van de assen, zou hier ook een updateScatter komen die  
-	- Barchart.js met daarin makeBarchart die statische aspecten van de barchart maakt, denk hierbij aan de assen, labels etc. Ook zit de updateBarchart in deze file, deze update de barchart als er op een ster is geklikt.
-	- Radarchart.js met daarin makeRadarChart die statische aspecten van de radar chart maakt, denk hierbij aan de assen, labels etc. Ook zit de updateRadarChart in deze file, deze update de radar chart als er op een ster is geklikt.
+	- Scatterplot.js met daarin makeScatter die de scatterplot en alle interactieve elementen maakt. Daarnaast bevat dit script ook een updateScatterplot functie die de scatterplot opnieuw plot als de gebruiker een andere x-as wil
+	- Barchart.js met daarin makeBarchart welke de statische aspecten van de barchart maakt, denk hierbij aan de assen, labels etc. Ook zit de updateBarchart in deze file, deze update de barchart als er op een ster is geklikt.
+	- RadarChart.js met daarin makeRadarChart die statische aspecten van de radar chart maakt, denk hierbij aan de assen, labels etc. Ook zit de updateRadarChart in deze file, deze update de radar chart als er op een ster is geklikt.
 	- een main.js die de functies aanroept.
 
-IDEE:
+Interactieve elementen:
 
-converter opnieuw laten runnen met door gebruiker ingestelde hoeveelheid sterren, afstand
+	- Slider waarmee de gebruiker kan kiezen hoeveel sterren er weergegeven worden.
+	- X-as kan worden verandert van kleurindex naar type ster
+	- De gebruiker kan (als de x-as kleurindex is) ook ervoor kiezen om bepaalde type sterren uit te zetten.
 
 
 Visualizatie:
