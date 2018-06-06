@@ -32,7 +32,7 @@ Interactieve elementen:
 
 Visualizatie:
 
-![](doc/Henk.jpg)
+![](doc/design.jpg)
 
 
 Voorlopige external components:
