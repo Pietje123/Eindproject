@@ -21,7 +21,7 @@ Scripts / Functies:
 	- Scatterplot.js met daarin makeScatter die de scatterplot en alle interactieve elementen maakt. Daarnaast bevat dit script ook een updateScatterplot functie die de scatterplot opnieuw plot als de gebruiker een andere x-as wil
 	- Barchart.js met daarin makeBarchart welke de statische aspecten van de barchart maakt, denk hierbij aan de assen, labels etc. Ook zit de updateBarchart in deze file, deze update de barchart als er op een ster is geklikt.
 	- RadarChart.js met daarin makeRadarChart die statische aspecten van de radar chart maakt, denk hierbij aan de assen, labels etc. Ook zit de updateRadarChart in deze file, deze update de radar chart als er op een ster is geklikt.
-	- een main.js die de functies aanroept.
+	- een main.js die de functies aanroept en de data inlaadt. De data wordt vervolgens naar de daarvoor bestemde functies doorgestuurd. Als er op een ster wordt geklikt dan wordt de data van die ster doorgestuurd (met behulp van .onclick()) 
 
 Interactieve elementen:
 
@@ -33,9 +33,10 @@ Interactieve elementen:
 Visualizatie:
 
 ![](doc/design.jpg)
+![](doc/Henk.jpg)
 
 
-External components:
+Voorlopige external components:
 
 	- d3
 	- d3-tip
