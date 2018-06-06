@@ -32,7 +32,6 @@ Interactieve elementen:
 
 Visualizatie:
 
-![](doc/Henk.jpg)
 ![](doc/Design.jpg)
 
 
