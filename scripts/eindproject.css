@@ -1,0 +1,6 @@
+.star { 
+	transition: all .2s ease-in-out; 
+}
+.star:hover { 
+	transform: scale(11.1); 
+}
