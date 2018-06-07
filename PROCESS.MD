@@ -6,6 +6,6 @@
 
 
 
-![](doc/ScatterDay1.jpg)
+![](doc/ScatterDay1.JPG)
 
-![](doc/barchartDay1.jpg)
+![](doc/barchartDay1.JPG)
