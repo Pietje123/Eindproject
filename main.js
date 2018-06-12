@@ -7,6 +7,7 @@ window.onload = function() {
 
 function main(error, response){
 	var starData = response
-	makeScatter(response)
-	makeBarchart()
+
+	makeScatter(starData[0])
+	makeBarchart(starData[0][0])
 }

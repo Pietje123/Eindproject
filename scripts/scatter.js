@@ -1,13 +1,11 @@
 function makeScatter(data){
 
-	data = data[0]
-	console.log(data[0])
-	var scale = 0.45
-	var margin = {top: 40, right: 20, bottom: 50, left: 40},
-	width = scale * window.innerWidth - margin.left - margin.right,
-	height = scale * window.innerWidth - margin.top - margin.bottom;
 
-	yLabel = "AbsMag"
+	var margin = {top: 40, right: 20, bottom: 50, left: 40},
+		width = 600 - margin.left - margin.right,
+		height = 600 - margin.top - margin.bottom;
+
+	yLabel = "AbsMagnitude"
 	xLabel = "ColorIndex"
 
 	var xValue = function(d) { return Number(d[xLabel]);}, // data -> value
@@ -20,6 +18,9 @@ function makeScatter(data){
 		yMap = function(d) { return yScale(yValue(d));}, // data -> display
 		yAxis = d3.axisLeft().scale(yScale);
 
+	console.log(d3.min(data, function(d){
+		return Number(d["AbsMagnitude"])
+	}))
 	var sequentialScale = d3.scaleSequential()
   							.domain([d3.max(data, xValue), d3.min(data, xValue)])
   							.interpolator(d3.interpolateRainbow);
@@ -28,6 +29,11 @@ function makeScatter(data){
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var tooltip = d3.select("#scatter").append("div")
+				      .attr("class", "tooltip")
+				      .style("opacity", 0);
+
 	xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);
 	yScale.domain([d3.max(data, yValue)+0.1, d3.min(data, yValue)-0.1]);
 	var title = yLabel + " vs " + xLabel
@@ -78,6 +84,28 @@ function makeScatter(data){
 		.attr("cy", yMap)
 		.style("fill", function(d){
 			return sequentialScale(d[xLabel])
+		})
+		.on("mouseover", function(d){
+			d3.select(this).attr("r", 10)
+			if (d["ProperName"] != "") {
+			let title = "The name of this star is " + d["ProperName"]
+			tooltip.html(title)
+			.style("left", (d3.event.pageX) + "px")
+			.style("opacity", .9)
+			.style("top", (d3.event.pageY) + "px");
+			}
+			else {
+			let title = "The number of this star is " + d["StarID"]
+			tooltip.html(title)
+					.style("opacity", .9)
+					.style("left", d3.event.pageX - 110 + "px")
+            		.style("top", d3.event.pageY - 60 + "px")
+            		.style("display", "inline-block")
+			}
+		})
+		.on("mouseout", function(d){
+			d3.select(this).attr("r", 1)
+			tooltip.style("opacity", 0)
 		})
 		.on("click", function(d){
 			updateBarchart(d);
