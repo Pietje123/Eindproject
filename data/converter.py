@@ -10,6 +10,7 @@ del_row = ["HIP","HD","HR","Gliese","BayerFlamsteed","PMRA","PMDec","RV","X","Y"
 count = 0
 datapoints = 10000
 d = 0
+spectrum = []
 for row in reader:
 	if not row["ColorIndex"] or (float(row["ColorIndex"]) > 2):
 		continue
@@ -22,13 +23,17 @@ for row in reader:
 	row["Velocity"] = str(velocity * 9777.92221)
 	if float(row["Distance"]) == 10000000.0:
 		continue
- 
+	# if row["Spectrum"] not in spectrum:
+	# 	print(row["Spectrum"])
+	# 	spectrum.append(row["Spectrum"])
 
 	json.dump(row, jsonfile)
 	jsonfile.write(',\n')
 	if count > datapoints:
 		break
 	count +=1
+
+
 
 csvfile.close()
 jsonfile.close()
