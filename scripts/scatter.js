@@ -1,4 +1,4 @@
-function makeScatter(data){
+function makeScatter(data, scaleEgdes){
 
 
 	var margin = {top: 40, right: 20, bottom: 50, left: 40},
@@ -18,27 +18,31 @@ function makeScatter(data){
 		yMap = function(d) { return yScale(yValue(d));}, // data -> display
 		yAxis = d3.axisLeft().scale(yScale);
 
-	console.log(d3.min(data, function(d){
-		return Number(d["AbsMagnitude"])
-	}))
+	
 	var sequentialScale = d3.scaleSequential()
   							.domain([d3.max(data, xValue), d3.min(data, xValue)])
   							.interpolator(d3.interpolateRainbow);
+	
 	var svg = d3.select("#scatter").append("svg")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var tooltip = d3.select("#scatter").append("div")
-				      .attr("class", "tooltip")
-				      .style("opacity", 0);
+	var scatterTip = d3.tip()
+				      .attr("class", "d3-tip")
+				      .offset([-8, 0])
+				      .html(function(d) { 
+				      		console.log("henk")
+				      		return "henk"});
+
+	svg.call(scatterTip);
+	console.log(scatterTip)
 
 	xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);
 	yScale.domain([d3.max(data, yValue)+0.1, d3.min(data, yValue)-0.1]);
 	var title = yLabel + " vs " + xLabel
 	// x-axis
-
 	svg.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")")
@@ -75,7 +79,7 @@ function makeScatter(data){
 		.text(yLabel)
 		.style("fill","black")
 
-	svg.selectAll(".dot")
+	var dots = svg.selectAll(".dot")
 		.data(data)
 		.enter().append("circle")
 		.attr("class", "star")
@@ -85,29 +89,22 @@ function makeScatter(data){
 		.style("fill", function(d){
 			return sequentialScale(d[xLabel])
 		})
-		.on("mouseover", function(d){
+	
+	dots.on("mouseover", function(d){
+			scatterTip.show
 			d3.select(this).attr("r", 10)
-			if (d["ProperName"] != "") {
-			let title = "The name of this star is " + d["ProperName"]
-			tooltip.html(title)
-			.style("left", (d3.event.pageX) + "px")
-			.style("opacity", .9)
-			.style("top", (d3.event.pageY) + "px");
-			}
-			else {
-			let title = "The number of this star is " + d["StarID"]
-			tooltip.html(title)
-					.style("opacity", .9)
-					.style("left", d3.event.pageX - 110 + "px")
-            		.style("top", d3.event.pageY - 60 + "px")
-            		.style("display", "inline-block")
-			}
+			
 		})
 		.on("mouseout", function(d){
 			d3.select(this).attr("r", 1)
-			tooltip.style("opacity", 0)
+			scatterTip.hide
 		})
 		.on("click", function(d){
-			updateBarchart(d);
+			updateBarchart(d, scaleEgdes);
 		})
+	
+
+	
 }
+
+
