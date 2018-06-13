@@ -40,12 +40,15 @@ function updateBarchart(rawData, scaleEgdes){
 
 	var height = 410;
 	
+	var tooltip = d3.select("#barchart").append("div")
+			      .attr("class", "tooltip")
+			      .style("opacity", 0);
 	
-    var barchartTooltip = d3.tip()
-				      .attr("class", "d3-tip")
-				      .offset([-8, 0])
-				      .html(function(d) { 
-				      	return "This is " + Math.round(d["value"] * 100 / 4.1)/100 + " % of the maximum" ; });
+    // var barchartTooltip = d3.tip()
+				//       .attr("class", "d3-tip")
+				//       .offset([-8, 0])
+				//       .html(function(d) { 
+				//       	return "This is " + Math.round(d["value"] * 100 / 4.1)/100 + " % of the maximum" ; });
     
  	var svgBarchart = d3.select("#barchart").select("svg").select("g")
 
@@ -62,13 +65,13 @@ function updateBarchart(rawData, scaleEgdes){
 			return Math.abs(d["value"])
 		})
 		.attr("width", 50).attr("class", "bar")
-
-
-		// bars.transition().duration(1000)
-		
-		bars.on("mouseover", barchartTooltip.show )
-			.on("mouseout", barchartTooltip.hide)
-		svgBarchart.call(barchartTooltip);
+		.on("mouseover", function(d){tooltip.html("This is " + Math.round(d["value"] * 100 / 4.1)/100 + " % of the maximum")
+					.style("opacity", .9)
+					.style("left", 530 + d["x"] + "px")
+            		.style("top", 450 - d["value"] + "px")
+            		.style("display", "inline-block") })
+		.on("mouseout", function(){tooltip.style("opacity", 0)})
+		// svgBarchart.call(barchartTooltip);
 }
 
 function dataForD3(rawData, scaleEgdes){

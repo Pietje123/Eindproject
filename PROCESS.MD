@@ -48,3 +48,20 @@
 ![](doc/ScatterDay4(1).JPG)
 
 ![](doc/barchartDay4(2).JPG)
+
+
+# day 5
+
+## Done
+	-	Tooltips working on both the scatterplot and the barchart
+	-	Took waaaayyyyy more time than expected
+	-	Barchart is pretty
+
+## To Do
+	-	Make radar chart
+	-	Write text
+	-	Make a nice lay out
+
+## Picture of current progress
+
+![](doc/total.JPG)
