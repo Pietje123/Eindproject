@@ -10,9 +10,10 @@ del_row = ["HIP","HD","HR","Gliese","BayerFlamsteed","PMRA","PMDec","RV","X","Y"
 count = 0
 datapoints = 10000
 d = 0
-spectrum = []
+types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
+
 for row in reader:
-	if not row["ColorIndex"] or (float(row["ColorIndex"]) > 2):
+	if not row["ColorIndex"] or (float(row["ColorIndex"]) > 2) or not row["Spectrum"]:
 		continue
 
 	velocity = (float(row["VX"])**2 + float(row["VY"])**2 + float(row["VZ"])**2)**0.5
@@ -23,16 +24,22 @@ for row in reader:
 	row["Velocity"] = str(velocity * 9777.92221)
 	if float(row["Distance"]) == 10000000.0:
 		continue
-	# if row["Spectrum"] not in spectrum:
-	# 	print(row["Spectrum"])
-	# 	spectrum.append(row["Spectrum"])
+	# 3.08567758 * 10 ** 13
+	row["Time"] = float(row["Distance"]) * 3.08567758 * 10 ** 11 / 24 / 365.25
+	row["Gas"] = float(row["Distance"]) * 3.08567758 * 10 ** 11 / 6.5
+
+	try:
+		row["Spectrum"] = types.index(row["Spectrum"][0]) + 1
+
+	except ValueError:
+		continue
 
 	json.dump(row, jsonfile)
 	jsonfile.write(',\n')
+
 	if count > datapoints:
 		break
 	count +=1
-
 
 
 csvfile.close()

@@ -9,16 +9,16 @@ function main(error, response){
 	var starData = response[0]
 	
 	makeScatter(starData, getMinMax(starData))
-	makeBarchart()
+	makeBarchart(starData[0], getMinMax(starData))
 }
 
 
 function getMinMax(data){
-	labels = ["AbsMagnitude","Magnitude","Velocity","ColorIndex"]
+	labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex"]
 	scaleEgdes = "{"
 	labels.forEach(function(label){
-		max = Math.max.apply(Math,data.map(function(o){return o[label];}))
-		min = Math.min.apply(Math,data.map(function(o){return o[label];}))
+		max = Math.max.apply(Math,data.map(function(d){return d[label];}))
+		min = Math.min.apply(Math,data.map(function(d){return d[label];}))
 		scaleEgdes += "\"" + label + "\"" + ":{ \"max\":" + max + ",\"min\":" + min + "},"
 	})
 	return JSON.parse(scaleEgdes.slice(0,-1) + "}")

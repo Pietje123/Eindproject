@@ -1,14 +1,16 @@
-function makeBarchart(){
+function makeBarchart(rawData, scaleEgdes){
 
-	var labels = ["AbsMagnitude","Magnitude","Velocity","ColorIndex"];
-	var scale = 0.45
+	var labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex"];
+
 	var margin = {top: 40, right: 20, bottom: 50, left: 40},
-	width = 500 - margin.left - margin.right,
-	height = 500 - margin.top - margin.bottom;
+		width = 300 - margin.left - margin.right,
+		height = 300 - margin.top - margin.bottom;
 	var barWidth = width / (labels.length)
 
 	var xScale = d3.scaleLinear().range([height,0]).domain([0,Infinity]),
 		xAxis = d3.axisLeft().scale(xScale)
+
+	var data = dataForD3(height, rawData, scaleEgdes)
 
 	// add the svg on which the bar chart is placed
 	var svg = d3.select("#barchart")
@@ -34,25 +36,23 @@ function makeBarchart(){
 
 
 function updateBarchart(rawData, scaleEgdes){
+	var height = 210;
+	var barWidth = 30;
+	var data = dataForD3(height, rawData, scaleEgdes)
+	var types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
 
-	var data = dataForD3(rawData, scaleEgdes)
 	d3.selectAll(".bar").remove();
 
-	var height = 410;
+	
 	
 	var tooltip = d3.select("#barchart").append("div")
 			      .attr("class", "tooltip")
 			      .style("opacity", 0);
-	
-    // var barchartTooltip = d3.tip()
-				//       .attr("class", "d3-tip")
-				//       .offset([-8, 0])
-				//       .html(function(d) { 
-				//       	return "This is " + Math.round(d["value"] * 100 / 4.1)/100 + " % of the maximum" ; });
     
  	var svgBarchart = d3.select("#barchart").select("svg").select("g")
 
 	var	bars = svgBarchart.selectAll(".bar").data(data).enter().append("rect")
+		
 		.attr("fill", "rgba(8, 81, 156, 0.6)")
 		.attr("stroke", "rgba(8, 81, 156, 0.6)")
 		.attr("transform", "translate(0," + height + ")")
@@ -64,22 +64,35 @@ function updateBarchart(rawData, scaleEgdes){
 		.attr("height", function(d){
 			return Math.abs(d["value"])
 		})
-		.attr("width", 50).attr("class", "bar")
-		.on("mouseover", function(d){tooltip.html("This is " + Math.round(d["value"] * 100 / 4.1)/100 + " % of the maximum")
-					.style("opacity", .9)
-					.style("left", 530 + d["x"] + "px")
-            		.style("top", 450 - d["value"] + "px")
-            		.style("display", "inline-block") })
-		.on("mouseout", function(){tooltip.style("opacity", 0)})
-		// svgBarchart.call(barchartTooltip);
+		.attr("width", barWidth).attr("class", "bar")
+		
+
+		bars.on("mouseover", function(d) {
+				if (d["id"] == "Spectrum"){ 
+					console.log(types[Math.round(d["value"]/height * labels.length) - 1])
+					tooltip.html("This star is of type: " + types[Math.round(d["value"]/height * labels.length) - 1] )
+							.style("opacity", .9)
+							.style("left", 555 + d["x"] + "px")
+		            		.style("top", height + 35 - d["value"] + "px")
+		            		.style("display", "inline-block")}
+				else{
+					tooltip.html("This is " + Math.round(d["value"] * 10000 / height)/100 + " % of the maximum")
+						.style("opacity", .9)
+						.style("left", 520 + d["x"] + "px")
+	            		.style("top", height + 35 - d["value"] + "px")
+	            		.style("display", "inline-block") }})
+			.on("mouseout", function(){tooltip.style("opacity", 0)})
+
+
+
 }
 
-function dataForD3(rawData, scaleEgdes){
+function dataForD3(maxLength, rawData, scaleEgdes){
 
-	var maxLength = 410
 	labels = document.getElementsByClassName("barLabel")
 	d3Data = []
 	for (var i = 0; i < labels.length; i++){
+
 		data = {"id": labels[i]["id"], "x": labels[i]["x"]["animVal"][0]["value"] - 25, 
 				"value":  (Number(rawData[String(labels[i]["id"])]) - scaleEgdes[String(labels[i]["id"])]["min"])
 					* (maxLength / (scaleEgdes[String(labels[i]["id"])]["max"] - scaleEgdes[String(labels[i]["id"])]["min"]))}
