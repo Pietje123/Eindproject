@@ -65,3 +65,19 @@
 ## Picture of current progress
 
 ![](doc/total.JPG)
+
+
+# day 7
+
+## Done
+	-	Wasted too much time trying to make the barchart more pretty
+	-	Made the increment lines of the radar chart
+
+## To Do
+	-	Finish Radarchart
+	-	Write text
+	-	Prettify everything
+
+## Picture of current progress
+
+![](doc/radarchart.JPG)

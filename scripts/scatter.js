@@ -28,7 +28,7 @@ function makeScatter(data, scaleEgdes){
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	var tooltip = d3.select("#scatter").append("div")
-				      .attr("class", "tooltip")
+				      .attr("class", "tooltip").attr("id", "scatterTooltip")
 				      .style("opacity", 0);
 
 	xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);

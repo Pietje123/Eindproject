@@ -9,12 +9,13 @@ function main(error, response){
 	var starData = response[0]
 	
 	makeScatter(starData, getMinMax(starData))
-	makeBarchart(starData[0], getMinMax(starData))
+	makeBarchart()
+	makeRadarChart(starData[0], getMinMax(starData))
 }
 
 
 function getMinMax(data){
-	labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex"]
+	labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex","Distance", "Time", "Magnitude", "Gas"]
 	scaleEgdes = "{"
 	labels.forEach(function(label){
 		max = Math.max.apply(Math,data.map(function(d){return d[label];}))
