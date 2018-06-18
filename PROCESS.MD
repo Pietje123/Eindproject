@@ -81,3 +81,19 @@
 ## Picture of current progress
 
 ![](doc/radarchart.JPG)
+
+# day 10
+
+## Done
+	-	Radarchart done
+	-	All visualizations are linked
+
+## To Do
+	-	Make x-axis of scatterplot variable
+	-	Write text
+	-	Prettify everything
+
+
+## Picture of current progress
+
+![](doc/radarchartday10.JPG)

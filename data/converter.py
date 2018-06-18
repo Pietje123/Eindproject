@@ -16,13 +16,16 @@ for row in reader:
 	if not row["ColorIndex"] or (float(row["ColorIndex"]) > 2) or not row["Spectrum"]:
 		continue
 
+	if row["ProperName"] == "Sol":
+		continue
+
 	velocity = (float(row["VX"])**2 + float(row["VY"])**2 + float(row["VZ"])**2)**0.5
 	for kill in del_row:
 		del row[kill]
 
 	# 9777.92221 to get km/s
 	row["Velocity"] = str(velocity * 9777.92221)
-	if float(row["Distance"]) == 10000000.0:
+	if float(row["Distance"]) >= 1000:
 		continue
 	# 3.08567758 * 10 ** 13
 	row["Time"] = float(row["Distance"]) * 3.08567758 * 10 ** 11 / 24 / 365.25

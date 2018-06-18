@@ -1,4 +1,4 @@
-function makeBarchart(rawData, scaleEgdes){
+function makeBarchart(rawData, scaleEdges){
 
 	var labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex"];
 
@@ -14,7 +14,7 @@ function makeBarchart(rawData, scaleEgdes){
 	// 		      .attr("class", "tooltip")
 	// 		      .style("opacity", 0);
 
-	var data = dataForD3(height, rawData, scaleEgdes)
+	var data = dataForD3(height, rawData, scaleEdges, "bar")
 
 	// add the svg on which the bar chart is placed
 	var svg = d3.select("#barchart")
@@ -69,10 +69,11 @@ function makeBarchart(rawData, scaleEgdes){
 }
 
 
-function updateBarchart(rawData, scaleEgdes){
+function updateBarchart(rawData, scaleEdges){
+
 	var height = 410;
 	var barWidth = 30;
-	var data = dataForD3(height, rawData, scaleEgdes)
+	var data = dataForD3(height, rawData, scaleEdges, "bar")
 	var types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
 
 	d3.selectAll(".bar").remove();
@@ -118,22 +119,5 @@ function updateBarchart(rawData, scaleEgdes){
 					tooltip.style("opacity", 0).style("left", 0 + "px")
 	            		.style("top", 0 + "px")})
 
-
-
 }
 
-function dataForD3(maxLength, rawData, scaleEgdes){
-
-	labels = document.getElementsByClassName("barLabel")
-	d3Data = []
-	for (var i = 0; i < labels.length; i++){
-
-		data = {"id": labels[i]["id"], "x": labels[i]["x"]["animVal"][0]["value"] - 25, 
-				"value":  (Number(rawData[String(labels[i]["id"])]) - scaleEgdes[String(labels[i]["id"])]["min"])
-					* (maxLength / (scaleEgdes[String(labels[i]["id"])]["max"] - scaleEgdes[String(labels[i]["id"])]["min"]))}
-
-		d3Data.push(data)
-
-	}
-	return d3Data
-}

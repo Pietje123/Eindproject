@@ -1,12 +1,12 @@
-function makeScatter(data, scaleEgdes){
+function makeScatter(data, scaleEdges){
 
 
 	var margin = {top: 40, right: 20, bottom: 50, left: 40},
 		width = 600 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
-	yLabel = "AbsMagnitude"
-	xLabel = "ColorIndex"
+	var yLabel = "AbsMagnitude"
+	var xLabel = "ColorIndex"
 
 	var xValue = function(d) { return Number(d[xLabel]);}, // data -> value
 		xScale = d3.scaleLinear().range([0, width]), // value -> display
@@ -72,7 +72,7 @@ function makeScatter(data, scaleEgdes){
 		.text(yLabel)
 		.style("fill","black")
 
-	svg.selectAll(".dot")
+	svg.selectAll(".star")
 		.data(data)
 		.enter().append("circle")
 		.attr("class", "star")
@@ -105,6 +105,7 @@ function makeScatter(data, scaleEgdes){
 			tooltip.style("opacity", 0)
 		})
 		.on("click", function(d){
-			updateBarchart(d, scaleEgdes);
+			// updateBarchart(d, scaleEdges)
+			updateRadarChart(d, scaleEdges)
 		})
 }
