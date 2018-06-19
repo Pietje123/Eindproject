@@ -1,15 +1,14 @@
 // https://bl.ocks.org/alandunning/4c36eb1abdb248de34c64f5672afd857
 
-function makeRadarChart(){
+function makeRadarChart(rawData, scaleEdges){
 
 	var variables = {
 		labels: ["Distance", "Time", "Magnitude", "Gas"],
 		increments: 5,
 		radians: Math.PI * 2,
-		width: 500,
-		height: 500,
+		width: 400,
+		height: 400,
 		extraWidth: 200,
-
 		extraHeight: 200
 	}
 
@@ -17,12 +16,16 @@ function makeRadarChart(){
 	var svg = d3.select("#radarchart").append("svg").attr("id", "radarSVG")
 				.attr("width", variables.width + variables.extraWidth)
 				.attr("height", variables.height + variables.extraHeight)
-				.selectAll(".increment")
+	
+	var radarTooltip = d3.select("#radarchart").append("div").attr("id", "radarTooltip")
+				      .attr("class", "tooltip")
+				      .style("opacity", 0);
+				
 
 
 	for (let i = 0; i < variables.increments; i++){
 		let factor = (i + 1) * radius / variables.increments
-		svg.data(variables.labels).enter()
+		svg.selectAll(".increment").data(variables.labels).enter()
 			.append("svg:line").attr("x1", function(d,j){
 				return factor * Math.cos(variables.radians * j / variables.labels.length)})
 			.attr("y1", function(d,j){
@@ -34,20 +37,20 @@ function makeRadarChart(){
 			.attr("class", "line")
 			.style("stroke", "black")
 			.style("stroke-opacity", "0.75")
-			.style("stroke-width", "0.3px")
-			.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
+			.style("stroke-width", "0.3px").attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
 								+ "," + (variables.height + variables.extraHeight) / 2 + ")" )
+			
 
 
 		// Needs data([1]) as dummy variable otherwise this won't work
-		svg.data([1]).enter().append("svg:text").attr("x", factor - 2).attr("y", -5)
+		svg.selectAll(".increment").data([1]).enter().append("svg:text").attr("x", factor - 2).attr("y", -5)
 			.attr("class", "ticks").style("font-family", "sans-serif").style("font-size", "10px")
 			.attr("fill", "#737373").text((i + 1) * 100 / variables.increments + "%")
 			.style("text-anchor", "end")
 			.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
 								+ "," + (variables.height + variables.extraHeight) / 2 + ")" );
 	}
-		svg.data([...Array(variables.labels.length).keys()]).enter()
+		svg.selectAll(".increment").data([...Array(variables.labels.length).keys()]).enter()
 			.append("svg:line").attr("x1", 0).attr("y1", 0)
 			.attr("x2", function(d){
 				return radius * Math.cos(variables.radians / variables.labels.length * (d + 1))})
@@ -60,7 +63,7 @@ function makeRadarChart(){
 			.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
 								+ "," + (variables.height + variables.extraHeight) / 2 + ")" );
 
-		svg.data(variables.labels).enter().append("svg:text")
+		svg.selectAll(".increment").data(variables.labels).enter().append("svg:text")
 			.attr("x", function(d,i){
 				return radius * Math.cos(variables.radians / variables.labels.length * (i + 1))
 							 + 20 * Math.cos(variables.radians / variables.labels.length * (i + 1))})
@@ -73,14 +76,41 @@ function makeRadarChart(){
 			.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
 								+ "," + (variables.height + variables.extraHeight) / 2 + ")" );
 
+
+	var x = d3.scaleLinear().range([- variables.width / 2, variables.width / 2]);
+	var y = d3.scaleLinear().range([- variables.height / 2, variables.height / 2]);
+	var data = dataForD3(radius, rawData, scaleEdges, "radar");
+	var coordinates = makeCoordinatesForPolygon(data);
+
+	var radarchart = svg.selectAll("polygon").data([coordinates]).enter().append("polygon")
+						.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
+								+ "," + (variables.height + variables.extraHeight) / 2 + ")")
+						.attr("points", function(d){
+							return d.map(function(d) {
+					            return [d.x, d.y].join(",")
+					    	}).join(" ")
+						}).style("fill-opacity", 0.5)
+
+	svg.selectAll(".circle").data(coordinates).enter().append("circle")
+		.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
+				+ "," + (variables.height + variables.extraHeight) / 2 + ")")
+		.attr("cx", function(d){ return d.x}).attr("cy", function(d){ return d.y})
+		.attr("r", 2).attr("class", "circle")
+		.on("mouseover", function(d){
+			d3.select(this).attr("r", 10)
+			showTooltip(d, rawData, "radar")
+		}).on("mouseout", function(d){
+			d3.select(this).attr("r", 2)
+			hideTooltip("radar")
+		})
+
+
+
 }
 
 function updateRadarChart(rawData, scaleEdges){
-	d3.selectAll("polygon").remove();
+	
 
-	var dimensions = document.getElementById("radarSVG").getBoundingClientRect()
-	var width = dimensions.width
-	var height = dimensions.height
 	var radius = document.getElementById("radarRadius").getBoundingClientRect().height
 	var data = dataForD3(radius, rawData, scaleEdges, "radar")
 
@@ -90,14 +120,24 @@ function updateRadarChart(rawData, scaleEdges){
 	var svg = d3.select("#radarchart").select("svg")
 
 	var coordinates = makeCoordinatesForPolygon(data)
-	console.log(coordinates)
 
-	svg.selectAll("polygon").data([coordinates]).enter().append("polygon").attr("points", function(d){
-		return d.map(function(d) {
-            return [d.x, d.y].join(",")
-        }).join(" ")
+	svg.selectAll("polygon").data([coordinates])
+		.transition().duration(1000)
+		.attr("points", function(d){
+			return d.map(function(d) {
+	            return [d.x, d.y].join(",")
+	        }).join(" ")
+		}).style("fill-opacity", 0.5)
 
-		}).attr("id", "henk").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-		.style("fill-opacity", 0.5)
-		// 
+	var circles = svg.selectAll(".circle").data(coordinates)
+		.on("mouseover", function(d){
+			d3.select(this).attr("r", 10)
+			showTooltip(d, rawData, "radar")
+		}).on("mouseout", function(d){
+			d3.select(this).attr("r", 2)
+			hideTooltip("radar")
+		})
+	circles.transition().duration(1000)
+		.attr("cx", function(d){ return d.x}).attr("cy", function(d){ return d.y})
+		.attr("r", 2).attr("class", "circle")
 }

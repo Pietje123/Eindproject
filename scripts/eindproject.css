@@ -13,3 +13,8 @@ rect:hover{
   padding: 14px;
   text-align: center;
 }
+
+polygon:hover{
+	fill: yellow;
+	opacity: 0.9;
+}

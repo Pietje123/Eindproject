@@ -97,3 +97,20 @@
 ## Picture of current progress
 
 ![](doc/radarchartday10.JPG)
+
+
+# day 11
+
+## Done
+	-	Code looks "smooth" and much less is hard coded
+	-	Barchart and radar chart are with transitions and tooltips
+
+## To Do
+	-	Make x-axis of scatterplot variable
+	-	Write text
+	-	Prettify lay-out
+
+
+## Picture of current progress
+
+Picture of code is bit redundant because of github

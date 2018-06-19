@@ -85,27 +85,29 @@ function makeScatter(data, scaleEdges){
 		.on("mouseover", function(d){
 			d3.select(this).attr("r", 10)
 			if (d["ProperName"] != "") {
-			let title = "The name of this star is " + d["ProperName"]
-			tooltip.html(title)
-			.style("left", (d3.event.pageX) + "px")
-			.style("opacity", .9)
-			.style("top", (d3.event.pageY) + "px");
+				let title = "The name of this star is " + d["ProperName"]
+				tooltip.html(title)
+				.style("left", d3.event.pageX - 110 + "px")
+				.style("opacity", .9)
+				.style("top", d3.event.pageY - 60 + "px");
 			}
 			else {
-			let title = "The number of this star is " + d["StarID"]
-			tooltip.html(title)
-					.style("opacity", .9)
-					.style("left", d3.event.pageX - 110 + "px")
-            		.style("top", d3.event.pageY - 60 + "px")
-            		.style("display", "inline-block")
+				let title = "The number of this star is " + d["StarID"]
+				tooltip.html(title)
+						.style("opacity", .9)
+						.style("left", d3.event.pageX - 110 + "px")
+	            		.style("top", d3.event.pageY - 60 + "px")
+	            		.style("display", "inline-block")
 			}
 		})
 		.on("mouseout", function(d){
 			d3.select(this).attr("r", 1)
 			tooltip.style("opacity", 0)
+					.style("left", 0 + "px")
+            		.style("top", 0 + "px")
 		})
 		.on("click", function(d){
-			// updateBarchart(d, scaleEdges)
+			updateBarchart(d, scaleEdges)
 			updateRadarChart(d, scaleEdges)
 		})
 }

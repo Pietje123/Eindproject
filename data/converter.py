@@ -27,16 +27,20 @@ for row in reader:
 	row["Velocity"] = str(velocity * 9777.92221)
 	if float(row["Distance"]) >= 1000:
 		continue
-	# 3.08567758 * 10 ** 13
-	row["Time"] = float(row["Distance"]) * 3.08567758 * 10 ** 11 / 24 / 365.25
-	row["Gas"] = float(row["Distance"]) * 3.08567758 * 10 ** 11 / 6.5
 
+	# Distance in kilometers instead of parsec
+	row["Distance"] = float(row["Distance"]) * 3.08567758 * 10 ** 13
+
+
+	row["Time"] = float(row["Distance"]) / 24 / 365.25 / 3600
+	row["Gas"] = float(row["Distance"])  / 100 * 6.5
 	try:
 		row["Spectrum"] = types.index(row["Spectrum"][0]) + 1
 
 	except ValueError:
 		continue
-
+	row["Temperature"] = 4600 * ((1 / (0.92 * float(row["ColorIndex"]) + 1.7))
+						 + (1 / (0.92 * float(row["ColorIndex"]) + 0.62)))
 	json.dump(row, jsonfile)
 	jsonfile.write(',\n')
 

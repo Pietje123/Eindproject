@@ -10,10 +10,8 @@ function main(error, response){
 	var minMax = getMinMax(starData)
 	
 	makeScatter(starData, minMax)
-	// makeBarchart()
-	makeRadarChart()
-	updateRadarChart(starData[100], minMax)
-	// updateBarchart(starData[0], minMax)
+	makeBarchart(starData[0], minMax)
+	makeRadarChart(starData[0], minMax)
 }
 
 
