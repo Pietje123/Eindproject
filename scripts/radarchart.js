@@ -109,7 +109,7 @@ function makeRadarChart(rawData, scaleEdges){
 }
 
 function updateRadarChart(rawData, scaleEdges){
-	
+
 
 	var radius = document.getElementById("radarRadius").getBoundingClientRect().height
 	var data = dataForD3(radius, rawData, scaleEdges, "radar")

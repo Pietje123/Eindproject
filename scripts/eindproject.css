@@ -12,6 +12,7 @@ rect:hover{
   border: 1px solid #6F257F;
   padding: 14px;
   text-align: center;
+  font-size: small;
 }
 
 polygon:hover{

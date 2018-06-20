@@ -6,7 +6,7 @@ jsonfile = open('jsonData.json', 'w')
 fieldnames = ["StarID","HIP","HD","HR","Gliese","BayerFlamsteed","ProperName","RA","Dec","Distance","PMRA","PMDec","RV","Magnitude","AbsMagnitude","Spectrum","ColorIndex","X","Y","Z","VX","VY","VZ"]
 reader = csv.DictReader(csvfile, fieldnames)
 jsonfile.write('[')
-del_row = ["HIP","HD","HR","Gliese","BayerFlamsteed","PMRA","PMDec","RV","X","Y","Z","VX","VY","VZ"]
+del_row = ["HIP","HD","HR","Gliese","BayerFlamsteed","PMRA","PMDec","RV","X","Y","Z","VX","VY","VZ", "RA", "Dec", "ProperName"]
 count = 0
 datapoints = 10000
 d = 0

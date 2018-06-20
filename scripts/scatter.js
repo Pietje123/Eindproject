@@ -1,12 +1,11 @@
 function makeScatter(data, scaleEdges){
 
-
 	var margin = {top: 40, right: 20, bottom: 50, left: 40},
 		width = 600 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
-	var yLabel = "AbsMagnitude"
 	var xLabel = "ColorIndex"
+	var yLabel = "AbsMagnitude"
 
 	var xValue = function(d) { return Number(d[xLabel]);}, // data -> value
 		xScale = d3.scaleLinear().range([0, width]), // value -> display
@@ -21,6 +20,7 @@ function makeScatter(data, scaleEdges){
 	var sequentialScale = d3.scaleSequential()
   							.domain([d3.max(data, xValue), d3.min(data, xValue)])
   							.interpolator(d3.interpolateRainbow);
+	
 	var svg = d3.select("#scatter").append("svg")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
@@ -37,7 +37,7 @@ function makeScatter(data, scaleEdges){
 	// x-axis
 
 	svg.append("g")
-		.attr("class", "x axis")
+		.attr("class", "xAxis")
 		.attr("transform", "translate(0," + height + ")")
 		.call(xAxis)
 		.append("text")
@@ -60,7 +60,7 @@ function makeScatter(data, scaleEdges){
 
 	// y axis
 	svg.append("g")
-		.attr("class", "y axis")
+		.attr("class", "yAxis")
 		.call(yAxis)
 		.append("text")
 		.attr("class", "label")
@@ -84,30 +84,80 @@ function makeScatter(data, scaleEdges){
 		})
 		.on("mouseover", function(d){
 			d3.select(this).attr("r", 10)
-			if (d["ProperName"] != "") {
-				let title = "The name of this star is " + d["ProperName"]
-				tooltip.html(title)
-				.style("left", d3.event.pageX - 110 + "px")
-				.style("opacity", .9)
-				.style("top", d3.event.pageY - 60 + "px");
-			}
-			else {
-				let title = "The number of this star is " + d["StarID"]
-				tooltip.html(title)
-						.style("opacity", .9)
-						.style("left", d3.event.pageX - 110 + "px")
-	            		.style("top", d3.event.pageY - 60 + "px")
-	            		.style("display", "inline-block")
-			}
+			showTooltip(d, d, "scatter")
 		})
 		.on("mouseout", function(d){
 			d3.select(this).attr("r", 1)
-			tooltip.style("opacity", 0)
-					.style("left", 0 + "px")
-            		.style("top", 0 + "px")
+			hideTooltip("scatter")
 		})
 		.on("click", function(d){
-			updateBarchart(d, scaleEdges)
-			updateRadarChart(d, scaleEdges)
+			$("html, body").animate({
+		        scrollTop: $("#barchart").offset().top}, "slow")
+				.promise().done(function(){
+				updateBarchart(d, scaleEdges)
+				updateRadarChart(d, scaleEdges)
+			})
 		})
+}
+
+
+function updateScatter(data, scaleEdges, xLabel, yLabel){
+
+
+	var margin = {top: 40, right: 20, bottom: 50, left: 40},
+		width = 600 - margin.left - margin.right,
+		height = 600 - margin.top - margin.bottom;
+	
+	var xValue = function(d) { return Number(d[xLabel]);}, // data -> value
+		xScale = d3.scaleLinear().range([0, width]), // value -> display
+		xMap = function(d) { return xScale(xValue(d));}, // data -> display
+		xAxis = d3.axisBottom().scale(xScale);
+
+	var yValue = function(d) { return Number(d[yLabel]);}, // data -> value
+		yScale = d3.scaleLinear().range([height, 0]), // value -> display
+		yMap = function(d) { return yScale(yValue(d));}, // data -> display
+		yAxis = d3.axisLeft().scale(yScale);
+	
+	var	stars = d3.selectAll(".star").data(data)
+		.on("mouseover", function(d){
+			d3.select(this).attr("r", 10)
+			showTooltip(d, d, "scatter")
+		})
+		.on("mouseout", function(d){
+			d3.select(this).attr("r", 1)
+			hideTooltip("scatter")
+		})
+		.on("click", function(d){
+			$("html, body").animate({
+		        scrollTop: $("#barchart").offset().top}, "slow")
+				.promise().done(function(){
+				updateBarchart(d, scaleEdges)
+				updateRadarChart(d, scaleEdges)
+			})
+		})
+	stars.attr("class", "star").attr("r", 1)
+		.attr("cx", xMap).attr("cy", yMap)
+		.style("fill", function(d){
+			return sequentialScale(d[xLabel])
+		})
+		console.log(d3.select("#xAxis"))
+
+	d3.select(".xAxis").call(xAxis)
+		.append("text")
+		.attr("class", "label")
+		.attr("x", width - 5)
+		.attr("y", -3)
+		.style("text-anchor", "end")
+		.text(xLabel)
+		.style("fill","black");
+
+	d3.select(".yAxis").call(yAxis).append("text")
+		.attr("class", "label")
+		.attr("transform", "rotate(-90)")
+		.attr("y",5)
+		.attr("x", -3)
+		.attr("dy", ".71em")
+		.style("text-anchor", "end")
+		.text(yLabel)
+		.style("fill","black")
 }

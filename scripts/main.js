@@ -7,11 +7,14 @@ window.onload = function() {
 
 function main(error, response){
 	var starData = response[0]
-	var minMax = getMinMax(starData)
-	
+	var labels = getLabels(starData[0])
+	var minMax = getMinMax(starData, labels)
+
+
 	makeScatter(starData, minMax)
 	makeBarchart(starData[0], minMax)
 	makeRadarChart(starData[0], minMax)
+	makeDropdown(labels, data, minMax)
 }
 
 

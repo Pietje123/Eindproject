@@ -114,3 +114,20 @@
 ## Picture of current progress
 
 Picture of code is bit redundant because of github
+
+
+# day 12
+
+## Done
+	-	Dropdown menu, doesn't update
+
+
+## To Do
+	-	Make the dropdown menu update
+	-	Write text
+	-	Prettify lay-out
+
+
+## Picture of current progress
+
+![](doc/dropdown.JPG)
