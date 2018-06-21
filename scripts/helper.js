@@ -161,7 +161,7 @@ function getLabels(data){
 function makeDropdown(labels, data, scaleEdges){
 	var axes = ["x", "y"]
 	axes.forEach(function(axis){
-		var select = d3.select("#dropdown")
+		var select = d3.select("#interactive")
 						.append("select")
 						.attr("class","select").attr("id", axis + "Dropdown")
 						.on("change", function(){ 
@@ -172,11 +172,38 @@ function makeDropdown(labels, data, scaleEdges){
 							.append("option")
 							.text(function (d) { return d; });
 	})
+	d3.select("#xDropdown").property("selectedIndex", labels.indexOf("ColorIndex"))
+	d3.select("#yDropdown").property("selectedIndex", labels.indexOf("AbsMagnitude"))
 }
 
 function onChangeDropdown(data, scaleEdges) {
+
 	var xLabel = $("#xDropdown :selected").text();
 	var yLabel = $("#yDropdown :selected").text();
 	updateScatter(data, scaleEdges, xLabel, yLabel)
 	
 };
+
+function makeSlider(maxStars){
+
+	// var default = 1000	
+	var slider = d3.sliderHorizontal()
+			    .min(0)
+			    .max(maxStars)
+			    .width(300)
+			    // .tickFormat(d3.format('.2%'))
+			    .ticks(5)
+			    .default(1000)
+			    .on('onchange', val => );
+
+  var g = d3.select("#slider").append("svg")
+    .attr("width", 500)
+    .attr("height", 100)
+    .append("g")
+    .attr("transform", "translate(30,30)");
+
+  g.call(slider);
+
+  d3.select("#reset").on("click", () => slider.value(1000));
+
+}

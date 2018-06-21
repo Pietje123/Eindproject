@@ -10,11 +10,11 @@ function main(error, response){
 	var labels = getLabels(starData[0])
 	var minMax = getMinMax(starData, labels)
 
-
 	makeScatter(starData, minMax)
 	makeBarchart(starData[0], minMax)
 	makeRadarChart(starData[0], minMax)
-	makeDropdown(labels, data, minMax)
+	makeDropdown(labels, starData, minMax)
+	makeSlider(starData.length)
 }
 
 

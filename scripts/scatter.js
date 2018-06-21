@@ -1,6 +1,6 @@
 function makeScatter(data, scaleEdges){
 
-	var margin = {top: 40, right: 20, bottom: 50, left: 40},
+	var margin = {top: 40, right: 20, bottom: 50, left: 80},
 		width = 600 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
@@ -32,21 +32,14 @@ function makeScatter(data, scaleEdges){
 				      .style("opacity", 0);
 
 	xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);
-	yScale.domain([d3.max(data, yValue)+0.1, d3.min(data, yValue)-0.1]);
+	yScale.domain([d3.min(data, yValue)-0.1, d3.max(data, yValue)+0.1]);
 	var title = yLabel + " vs " + xLabel
 	// x-axis
 
 	svg.append("g")
 		.attr("class", "xAxis")
 		.attr("transform", "translate(0," + height + ")")
-		.call(xAxis)
-		.append("text")
-		.attr("class", "label")
-		.attr("x", width - 5)
-		.attr("y", -3)
-		.style("text-anchor", "end")
-		.text(xLabel)
-		.style("fill","black");
+		.call(xAxis.ticks(9).tickFormat(d3.format(".1e")));
 
 
 	// title
@@ -54,6 +47,7 @@ function makeScatter(data, scaleEdges){
 		.attr("x", (width / 2))
 		.attr("y", 0 - (margin.top / 2))
 		.attr("text-anchor", "middle")
+		.attr("id", "title")
 		.style("font-size", "16px")
 		.style("text-decoration", "underline")
 		.text(title);
@@ -61,22 +55,13 @@ function makeScatter(data, scaleEdges){
 	// y axis
 	svg.append("g")
 		.attr("class", "yAxis")
-		.call(yAxis)
-		.append("text")
-		.attr("class", "label")
-		.attr("transform", "rotate(-90)")
-		.attr("y",5)
-		.attr("x", -3)
-		.attr("dy", ".71em")
-		.style("text-anchor", "end")
-		.text(yLabel)
-		.style("fill","black")
+		.call(yAxis.ticks(9).tickFormat(d3.format(".1e")));
 
 	svg.selectAll(".star")
 		.data(data)
 		.enter().append("circle")
 		.attr("class", "star")
-		.attr("r", 1)
+		.attr("r", 2)
 		.attr("cx", xMap)
 		.attr("cy", yMap)
 		.style("fill", function(d){
@@ -87,7 +72,7 @@ function makeScatter(data, scaleEdges){
 			showTooltip(d, d, "scatter")
 		})
 		.on("mouseout", function(d){
-			d3.select(this).attr("r", 1)
+			d3.select(this).attr("r", 2)
 			hideTooltip("scatter")
 		})
 		.on("click", function(d){
@@ -98,16 +83,16 @@ function makeScatter(data, scaleEdges){
 				updateRadarChart(d, scaleEdges)
 			})
 		})
+
 }
 
 
 function updateScatter(data, scaleEdges, xLabel, yLabel){
-
-
-	var margin = {top: 40, right: 20, bottom: 50, left: 40},
+	d3.select("#title").remove()
+	var margin = {top: 40, right: 20, bottom: 50, left: 80},
 		width = 600 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
-	
+
 	var xValue = function(d) { return Number(d[xLabel]);}, // data -> value
 		xScale = d3.scaleLinear().range([0, width]), // value -> display
 		xMap = function(d) { return xScale(xValue(d));}, // data -> display
@@ -117,14 +102,24 @@ function updateScatter(data, scaleEdges, xLabel, yLabel){
 		yScale = d3.scaleLinear().range([height, 0]), // value -> display
 		yMap = function(d) { return yScale(yValue(d));}, // data -> display
 		yAxis = d3.axisLeft().scale(yScale);
+
+
+	var sequentialScale = d3.scaleSequential()
+  							.domain([d3.max(data, xValue), d3.min(data, xValue)])
+  							.interpolator(d3.interpolateRainbow);
+
+	xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);
+	yScale.domain([d3.min(data, yValue)-0.1, d3.max(data, yValue)+0.1]);
 	
+	var title = yLabel + " vs " + xLabel
+
 	var	stars = d3.selectAll(".star").data(data)
 		.on("mouseover", function(d){
 			d3.select(this).attr("r", 10)
 			showTooltip(d, d, "scatter")
 		})
 		.on("mouseout", function(d){
-			d3.select(this).attr("r", 1)
+			d3.select(this).attr("r", 2)
 			hideTooltip("scatter")
 		})
 		.on("click", function(d){
@@ -135,29 +130,25 @@ function updateScatter(data, scaleEdges, xLabel, yLabel){
 				updateRadarChart(d, scaleEdges)
 			})
 		})
-	stars.attr("class", "star").attr("r", 1)
+	stars.transition().duration(1000).attr("class", "star").attr("r", 2)
 		.attr("cx", xMap).attr("cy", yMap)
 		.style("fill", function(d){
 			return sequentialScale(d[xLabel])
 		})
-		console.log(d3.select("#xAxis"))
+	d3.select("g").append("text")
+		.attr("x", (width / 2))
+		.attr("y", 0 - (margin.top / 2))
+		.attr("text-anchor", "middle")
+		.attr("id", "title")
+		.style("font-size", "16px")
+		.style("text-decoration", "underline")
+		.text(title);
 
-	d3.select(".xAxis").call(xAxis)
-		.append("text")
-		.attr("class", "label")
-		.attr("x", width - 5)
-		.attr("y", -3)
-		.style("text-anchor", "end")
-		.text(xLabel)
-		.style("fill","black");
+	d3.select(".xAxis").transition().duration(1000)
+		.call(xAxis.ticks(9).tickFormat(d3.format(".1e")));
 
-	d3.select(".yAxis").call(yAxis).append("text")
-		.attr("class", "label")
-		.attr("transform", "rotate(-90)")
-		.attr("y",5)
-		.attr("x", -3)
-		.attr("dy", ".71em")
-		.style("text-anchor", "end")
-		.text(yLabel)
-		.style("fill","black")
+	d3.select(".yAxis").transition().duration(1000)
+		.call(yAxis.ticks(9).tickFormat(d3.format(".1e")));
+
+
 }
