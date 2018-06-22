@@ -131,3 +131,32 @@ Picture of code is bit redundant because of github
 ## Picture of current progress
 
 ![](doc/dropdown.JPG)
+
+
+# day 13
+
+## Done
+	-	Dropdown menu updates 
+
+
+## To Do
+	-	Make the slider function
+	-	Write text
+	-	Prettify lay-out
+
+# day 14
+
+## Done
+	-	The slider functions, but the scatterplot breaks
+
+
+## To Do
+	-	Make the slider function without breaking the scatterplot
+	-	Write text
+	-	Prettify lay-out
+
+
+## Picture of current progress
+
+![](doc/slider.JPG)
+

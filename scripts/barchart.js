@@ -2,19 +2,17 @@ function makeBarchart(rawData, scaleEdges){
 
 	var labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex", "Temperature"];
 
-	var margin = {top: 40, right: 20, bottom: 50, left: 40},
+	var margin = {top: 40, right: 20, bottom: 50, left: 50},
 		width = labels.length * 100 - margin.left - margin.right,
 		height = labels.length * 100 - margin.top - margin.bottom;
 	var barWidth = width / (labels.length * 2)
 
-	var xScale = d3.scaleLinear().range([height,0]).domain([0,Infinity]),
+	var xScale = d3.scaleLinear().range([height,0]).domain([0,1]),
 		xAxis = d3.axisLeft().scale(xScale)
 
 	var tooltip = d3.select("#barchart").append("div").attr("id", "barTooltip")
 			      .attr("class", "tooltip")
 			      .style("opacity", 0);
-
-	var data = dataForD3(height, rawData, scaleEdges, "bar")
 
 	var barchartTooltip = d3.select("#barchart").append("div").attr("id", "barTooltip")
 				      .attr("class", "tooltip")
@@ -41,11 +39,18 @@ function makeBarchart(rawData, scaleEdges){
 				return (width  - (i + .5) * barWidth * 2)
 			}).text(function(d){return d }).attr("text-anchor", "middle")
 
-
+	svg.append("text")
+		.attr("x", (width / 2))
+		.attr("y", 0 - (margin.top / 2))
+		.attr("text-anchor", "middle")
+		.attr("id", "barchartTitle")
+		.style("font-size", "16px")
+		.style("text-decoration", "underline")
+		.text("Data of star number " + rawData["StarID"]);
 
 	// add the bar
 	svg.append("g").attr("class", "axis tick").attr("transform", "translate(" + (margin.left / 2) + ",0)")
-			.call(xAxis)
+			.call(xAxis.tickFormat(d3.format(".0%")))
 
 
 	var data = dataForD3(height, rawData, scaleEdges, "bar")
@@ -57,7 +62,7 @@ function makeBarchart(rawData, scaleEdges){
 		.attr("class","bar").attr("y",  function(d){
 			return - Math.abs(d["value"])
 		}).attr("x", function(d){
-			return d["x"] - barWidth / 2
+			return d["x"] - barWidth / 3
 		})
 		.attr("height", function(d){
 			return Math.abs(d["value"])
@@ -71,14 +76,19 @@ function makeBarchart(rawData, scaleEdges){
 
 
 function updateBarchart(rawData, scaleEdges){
+
 	var barWidth = document.getElementById("barAbsMagnitude").getAttribute("width");
 	var dimensions = getDimensionsFromTranslation(document.getElementById("barAbsMagnitude"));
 	var width = dimensions[0],
 		height = dimensions[1];
 
+
+
 	var data = dataForD3(height, rawData, scaleEdges, "bar")
 	var types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
 
+
+	$("#barchartTitle").html("Data of star number " + rawData["StarID"])
 	var	bars = d3.selectAll(".bar").data(data)
 		.on("mouseover", function(d){
 			showTooltip(d, rawData, "bar")})
@@ -92,12 +102,11 @@ function updateBarchart(rawData, scaleEdges){
 		.attr("class","bar").attr("y",  function(d){
 			return - Math.abs(d["value"])
 		}).attr("x", function(d){
-			return d["x"] - barWidth / 2
+			return d["x"] - barWidth / 3
 		})
 		.attr("height", function(d){
 			return Math.abs(d["value"])
 		})
 		.attr("width", barWidth).attr("class", "bar")
-
 }
 

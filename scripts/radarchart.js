@@ -20,8 +20,17 @@ function makeRadarChart(rawData, scaleEdges){
 	var radarTooltip = d3.select("#radarchart").append("div").attr("id", "radarTooltip")
 				      .attr("class", "tooltip")
 				      .style("opacity", 0);
-				
 
+	var title = "Data about the relationship between Earth and star number " + rawData["StarID"];
+
+	svg.append("text")
+		.attr("x", (variables.width + variables.extraWidth) / 2)
+		.attr("y", variables.extraHeight / 4)
+		.attr("text-anchor", "middle")
+		.attr("id", "titleRadarChart")
+		.style("font-size", "16px")
+		.style("text-decoration", "underline")
+		.text(title);
 
 	for (let i = 0; i < variables.increments; i++){
 		let factor = (i + 1) * radius / variables.increments
@@ -110,7 +119,7 @@ function makeRadarChart(rawData, scaleEdges){
 
 function updateRadarChart(rawData, scaleEdges){
 
-
+	$("#titleRadarChart").html("Data about the relationship between Earth and star number " + rawData["StarID"])
 	var radius = document.getElementById("radarRadius").getBoundingClientRect().height
 	var data = dataForD3(radius, rawData, scaleEdges, "radar")
 

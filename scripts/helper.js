@@ -51,6 +51,8 @@ function showTooltip(dot, rawData, plot){
 	var types = ["S", "N", "R", "M", "K", "G", "F", "A", "B", "O", "W"]
 
 	var title;
+	var dx = 10;
+	var dy = -70;
 
 
 	switch(dot["id"]){
@@ -98,18 +100,7 @@ function showTooltip(dot, rawData, plot){
 			break;
 
 		default:
-			title = "The number of this star is " + dot["StarID"]
-	}
-
-	if (plot == "scatter"){
-		
-		var dx = -110;
-		var dy = -60;
-	}
-	else {
-
-		var dx = 10;
-		var dy = -70;
+			title = "Oops you broke something "
 	}
 
 	d3.select("#" + plot + "Tooltip").html(title)
@@ -120,13 +111,27 @@ function showTooltip(dot, rawData, plot){
 	
 }
 
-
 function hideTooltip(plot){
 
 	d3.select("#" + plot + "Tooltip")
 		.style("opacity", 0)
 		.style("left", 0 + "px")
 		.style("top", 0 + "px")
+		.style("display", "inline-block")
+}
+
+function showTooltipScatterplot(data){
+	var labels = getLabelsScatterplot();
+	var xLabel = labels[0]
+	var yLabel = labels[1]
+	var title = "The number of this star is: " + data["StarID"] + ". The x coordinate (" +
+				xLabel + ") is " + Number(data[xLabel]).toExponential(2) + ", the y coordinate (" 
+				+ yLabel + ") is " + Number(data[yLabel]).toExponential(2)
+
+	d3.select("#scatterTooltip").html(title)
+		.style("opacity", .9)
+		.style("left", d3.event.layerX  - 300 + "px")
+		.style("top", d3.event.layerY - 60 + "px")
 		.style("display", "inline-block")
 }
 
@@ -161,11 +166,17 @@ function getLabels(data){
 function makeDropdown(labels, data, scaleEdges){
 	var axes = ["x", "y"]
 	axes.forEach(function(axis){
-		var select = d3.select("#interactive")
-						.append("select")
+		var div = d3.select("#interactive").append("div")
+		
+		div.append("text").text("The current " + axis + " variable is: ")
+		
+		var select = div.append("select")
 						.attr("class","select").attr("id", axis + "Dropdown")
 						.on("change", function(){ 
 							onChangeDropdown(data, scaleEdges)})
+
+
+		
 
 		var options = select.selectAll("option")
 							.data(labels).enter()
@@ -176,17 +187,28 @@ function makeDropdown(labels, data, scaleEdges){
 	d3.select("#yDropdown").property("selectedIndex", labels.indexOf("AbsMagnitude"))
 }
 
-function onChangeDropdown(data, scaleEdges) {
 
+function getLabelsScatterplot(){
 	var xLabel = $("#xDropdown :selected").text();
 	var yLabel = $("#yDropdown :selected").text();
+	return [xLabel, yLabel]
+
+}
+
+function onChangeDropdown(data, scaleEdges) {
+
+	var labels = getLabelsScatterplot();
+	var xLabel = labels[0];
+	var yLabel = labels[1];
+
 	updateScatter(data, scaleEdges, xLabel, yLabel)
 	
 };
 
-function makeSlider(maxStars){
 
-	// var default = 1000	
+function makeSlider(data, scaleEdges){
+	var maxStars = data.length
+
 	var slider = d3.sliderHorizontal()
 			    .min(0)
 			    .max(maxStars)
@@ -194,7 +216,9 @@ function makeSlider(maxStars){
 			    // .tickFormat(d3.format('.2%'))
 			    .ticks(5)
 			    .default(1000)
-			    .on('onchange', val => );
+			    .on('onchange', function(d){
+			    				updateScatterSlider(data.slice(0, Math.round(d)), scaleEdges, maxStars - Math.round(d))
+			    		});
 
   var g = d3.select("#slider").append("svg")
     .attr("width", 500)
@@ -206,4 +230,25 @@ function makeSlider(maxStars){
 
   d3.select("#reset").on("click", () => slider.value(1000));
 
+}
+
+function changeStarColour(id, colour){
+
+	$("#" + id).css("fill", colour)
+
+}
+
+function updateScatterSlider(data, scaleEdges, other){
+	labels = getLabelsScatterplot()
+	xLabel = String(labels[0])
+	yLabel = String(labels[1])
+	console.log(yLabel)
+	console.log(data)
+	for (let i = 0; i < other; i++)
+	{
+		data.push({xLabel: Infinity, yLabel: Infinity})
+	}
+	console.log(data)
+
+	updateScatter(data, scaleEdges, xLabel, yLabel)
 }
