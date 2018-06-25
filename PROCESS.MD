@@ -160,3 +160,18 @@ Picture of code is bit redundant because of github
 
 ![](doc/slider.JPG)
 
+# day 14
+
+## Done
+	-	Interactivity done
+
+
+## To Do
+	-	Use proper colour of the stars (same colour as at the start)
+	-	Write text
+	-	Prettify lay-out
+
+
+## Picture of current progress
+
+![](doc/Bug.JPG)

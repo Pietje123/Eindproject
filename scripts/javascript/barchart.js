@@ -89,6 +89,7 @@ function updateBarchart(rawData, scaleEdges){
 
 
 	$("#barchartTitle").html("Data of star number " + rawData["StarID"])
+	
 	var	bars = d3.selectAll(".bar").data(data)
 		.on("mouseover", function(d){
 			showTooltip(d, rawData, "bar")})

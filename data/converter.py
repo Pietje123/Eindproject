@@ -8,7 +8,7 @@ reader = csv.DictReader(csvfile, fieldnames)
 jsonfile.write('[')
 del_row = ["HIP","HD","HR","Gliese","BayerFlamsteed","PMRA","PMDec","RV","X","Y","Z","VX","VY","VZ", "RA", "Dec", "ProperName"]
 count = 0
-datapoints = 10
+datapoints = 1000
 d = 0
 types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
 

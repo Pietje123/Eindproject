@@ -2,7 +2,9 @@ rect:hover{
 	fill: rgba(8, 81, 156, 0.2)
 }
 
-
+.navbar navbar-inverse sticky-top{
+  fill: blue;
+}
 .tooltip {
   position: absolute;
   display: none;

@@ -20,9 +20,9 @@ function makeScatter(data, scaleEdges){
 		yAxis = d3.axisLeft().scale(yScale);
 
 	var sequentialScale = d3.scaleSequential()
-  							.domain([d3.max(data, xValue), d3.min(data, xValue)])
+  							.domain([scaleEdges[xLabel]["max"], scaleEdges[xLabel]["min"]])
   							.interpolator(d3.interpolateRainbow);
-	
+
 	// can't go in function because of async of js
 	var starString = $("#barchartTitle").text().split(" ")
 	var StarID = starString[starString.length - 1]
@@ -44,7 +44,6 @@ function makeScatter(data, scaleEdges){
 	yScale.domain([d3.min(data, yValue)-0.1, d3.max(data, yValue)+0.1]);
 	var title = yLabel + " vs " + xLabel
 
-	
 	// x-axis
 	svg.append("g")
 		.attr("class", "xAxis")
@@ -78,6 +77,7 @@ function makeScatter(data, scaleEdges){
 			return sequentialScale(d["ColorIndex"])
 		})
 		.on("mouseover", function(d){
+
 			d3.select(this).attr("r", 10)
 			showTooltipScatterplot(d)
 		})
@@ -89,6 +89,7 @@ function makeScatter(data, scaleEdges){
 			$("html, body").animate({
 		        scrollTop: $("#barchart").offset().top}, "slow")
 				.promise().done(function(){
+					
 				// can't go in function because of async of js
 				var starString = $("#barchartTitle").text().split(" ")
 				var StarID = starString[starString.length - 1]
@@ -100,14 +101,13 @@ function makeScatter(data, scaleEdges){
 		})
 
 	changeStarColour(StarID, "black")
-
 }
 
 
-function updateScatter(data, scaleEdges, xLabel, yLabel){
+function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
 	d3.select("#title").remove()
 
-
+	// can't go in function because of async of js
 	var starString = $("#barchartTitle").text().split(" ")
 	var StarID = starString[starString.length - 1]
 
@@ -125,15 +125,13 @@ function updateScatter(data, scaleEdges, xLabel, yLabel){
 		yMap = function(d) { return yScale(yValue(d));}, // data -> display
 		yAxis = d3.axisLeft().scale(yScale);
 
-	var cValue = function(d) { return Number(d["ColorIndex"])}
+	xScale.domain([scaleEdges[xLabel]["min"] - 0.1,  scaleEdges[xLabel]["max"] + 0.1]);
+	yScale.domain([scaleEdges[yLabel]["min"] - 0.1, scaleEdges[yLabel]["max"] + 0.1]);
 
 	var sequentialScale = d3.scaleSequential()
-  							.domain([d3.max(data, cValue), d3.min(data, cValue)])
+  							.domain([colourScale["max"], colourScale["min"]])
   							.interpolator(d3.interpolateRainbow);
 
-	xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);
-	yScale.domain([d3.min(data, yValue)-0.1, d3.max(data, yValue)+0.1]);
-	
 	var title = yLabel + " vs " + xLabel
 
 	var	stars = d3.selectAll(".star").data(data)
@@ -153,6 +151,7 @@ function updateScatter(data, scaleEdges, xLabel, yLabel){
 					// can't go in function because of async of js
 					var starString = $("#barchartTitle").text().split(" ")
 					var StarID = starString[starString.length - 1]
+
 					changeStarColour(StarID, sequentialScale(d["ColorIndex"]))
 					updateBarchart(d, scaleEdges)
 					updateRadarChart(d, scaleEdges)
@@ -162,8 +161,9 @@ function updateScatter(data, scaleEdges, xLabel, yLabel){
 			})
 	stars.transition().duration(1000).attr("class", "star").attr("r", 2)
 		.attr("cx", xMap).attr("cy", yMap)
-		.style("fill", function(d){
-			return sequentialScale(d["ColorIndex"])
+		.style("opacity", function(d){
+			if (Object.keys(d).length > 2){	return 1 }
+			else { return 0}
 		})
 	d3.select("g").append("text")
 		.attr("x", (width / 2))
@@ -180,5 +180,4 @@ function updateScatter(data, scaleEdges, xLabel, yLabel){
 	d3.select(".yAxis").transition().duration(1000)
 		.call(yAxis.ticks(9).tickFormat(d3.format(".1e")));
 
-	changeStarColour(StarID, "black")
 }
