@@ -113,8 +113,8 @@ function hideTooltip(plot){
 
 	d3.select("#" + plot + "Tooltip")
 		.style("opacity", 0)
-		.style("left", 0 + "px")
-		.style("top", 0 + "px")
+		.style("left", -1000 + "px")
+		.style("top", -1000 + "px")
 		.style("display", "inline-block")
 }
 
@@ -129,7 +129,7 @@ function showTooltipScatterplot(data){
 	d3.select("#scatterTooltip").html(title)
 		.style("opacity", .9)
 		.style("left", d3.event.layerX  - 300 + "px")
-		.style("top", d3.event.layerY - 120 + "px")
+		.style("top", d3.event.layerY - 80 + "px")
 		.style("display", "inline-block")
 }
 
@@ -161,8 +161,8 @@ function getLabels(data){
 }
 
 function getLabelsScatterplot(){
-	var xLabel = $("#xDropdown :selected").text();
-	var yLabel = $("#yDropdown :selected").text();
+	var xLabel = $("#xButton").text();
+	var yLabel = $("#yButton").text();
 	return [xLabel, yLabel]
 }
 
@@ -187,100 +187,14 @@ function makeDummyData(labels){
 	return dummyStar
 }
 
-
-function makeSlider(data, scaleEdges){
-	var maxStars = data.length
-
-	var slider = d3.sliderHorizontal()
-			    .min(0)
-			    .max(maxStars)
-			    .width(300)
-			    // .tickFormat(d3.format('.2%'))
-			    .ticks(5)
-			    .default(1000)
-			    .on('onchange', function(d){
-			    				sliderUpdatePlots(data.slice(0, Math.round(d)), maxStars - Math.round(d),
-			    					scaleEdges["ColorIndex"])
-			    		});
-
-  var g = d3.select("#slider").append("svg")
-    .attr("width", 500)
-    .attr("height", 100)
-    .append("g")
-    .attr("transform", "translate(30,30)");
-
-  g.call(slider);
-
-  d3.select("#reset").on("click", function(){slider.value(1000)});
-
+function navBarOnClick(){
+	var navHeight = $("nav").outerHeight()
+	$(function() {
+		$('ul a').bind('click',function(event){
+			var anchor = $(this);
+			$("html, body").animate({
+			        scrollTop: $("#" + anchor.text()).offset().top - navHeight}, "slow")
+			event.preventDefault();
+		});
+	});
 }
-
-function sliderUpdatePlots(data, otherStarsInt, colourIndex){
-	var scatterLabels = getLabelsScatterplot()
-
-	var xLabel = String(scatterLabels[0])
-	var yLabel = String(scatterLabels[1])
-
-	var allLabels = getLabels(data[0])
-	var scaleEdges = getMinMax(data, allLabels)
-	for (let i = 0; i < otherStarsInt; i++)
-	{
-		let dummyStar = {};
-		dummyStar[xLabel] = scaleEdges[xLabel]["min"] 
-		dummyStar[yLabel] = scaleEdges[yLabel]["min"]
-		data.push(dummyStar)
-
-	}
-
-	updateScatter(data, scaleEdges, xLabel, yLabel, colourIndex)
-	console.log(getCurrentStar)
-	console.log(data.length)
-	if (data.length < getCurrentStar()){
-		let dummydata = makeDummyData(allLabels)
-		updateBarchart(rawData, scaleEdges)
-		updateRadarChart(rawData,scaleEdges)
-
-	}
-
-}
-
-function makeDropdown(labels, data, scaleEdges){
-	var axes = ["x", "y"]
-	axes.forEach(function(axis){
-		var div = d3.select("#dropdown").append("div")
-		
-		div.append("text").text("The current " + axis + " variable is: ")
-		
-		var select = div.append("select")
-						.attr("class","select").attr("id", axis + "Dropdown")
-						.on("change", function(){ 
-							changeDropdown(data, scaleEdges)})
-
-
-		
-
-		var options = select.selectAll("option")
-							.data(labels).enter()
-							.append("option")
-							.text(function (d) { return d; });
-	})
-	d3.select("#xDropdown").property("selectedIndex", labels.indexOf("ColorIndex"))
-	d3.select("#yDropdown").property("selectedIndex", labels.indexOf("AbsMagnitude"))
-}
-
-function changeDropdown(data, scaleEdges) {
-
-	var labels = getLabelsScatterplot();
-	var xLabel = labels[0];
-	var yLabel = labels[1];
-	var colourIndex = scaleEdges["ColorIndex"]
-	if (data.length != 1000){
-		var amountOfStars = Number($(".parameter-value").text())
-		data = data.slice(0,amountOfStars)
-		scaleEdges = getMinMax(data,labels)
-	}
-
-
-	updateScatter(data, scaleEdges, xLabel, yLabel, colourIndex)
-	
-};

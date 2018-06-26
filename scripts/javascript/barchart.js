@@ -1,10 +1,10 @@
-function makeBarchart(rawData, scaleEdges){
+function makeBarchart(rawData, scaleEdges, colour){
 
 	var labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex", "Temperature"];
 
 	var margin = {top: 40, right: 20, bottom: 50, left: 50},
 		width = labels.length * 100 - margin.left - margin.right,
-		height = labels.length * 100 - margin.top - margin.bottom;
+		height = labels.length * 80 - margin.top - margin.bottom;
 	var barWidth = width / (labels.length * 2)
 
 	var xScale = d3.scaleLinear().range([height,0]).domain([0,1]),
@@ -40,6 +40,7 @@ function makeBarchart(rawData, scaleEdges){
 			}).text(function(d){return d }).attr("text-anchor", "middle")
 
 	svg.append("text")
+		.attr("class", "title")
 		.attr("x", (width / 2))
 		.attr("y", 0 - (margin.top / 2))
 		.attr("text-anchor", "middle")
@@ -56,8 +57,8 @@ function makeBarchart(rawData, scaleEdges){
 	var data = dataForD3(height, rawData, scaleEdges, "bar")
 
 	var bars = d3.select("#barchart").select("svg").select("g").selectAll(".bar").data(data).enter().append("rect")
-		.attr("fill", "rgba(8, 81, 156, 0.6)")
-		.attr("stroke", "rgba(8, 81, 156, 0.6)")
+		.attr("fill", colour)
+		.attr("stroke", colour)
 		.attr("transform", "translate(0," + height + ")").attr("id",  function(d){return "bar" + d["id"]})
 		.attr("class","bar").attr("y",  function(d){
 			return - Math.abs(d["value"])
@@ -75,7 +76,7 @@ function makeBarchart(rawData, scaleEdges){
 }
 
 
-function updateBarchart(rawData, scaleEdges){
+function updateBarchart(rawData, scaleEdges, colour){
 
 	var barWidth = document.getElementById("barAbsMagnitude").getAttribute("width");
 	var dimensions = getDimensionsFromTranslation(document.getElementById("barAbsMagnitude"));
@@ -87,7 +88,6 @@ function updateBarchart(rawData, scaleEdges){
 	var data = dataForD3(height, rawData, scaleEdges, "bar")
 	var types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
 
-
 	$("#barchartTitle").html("Data of star number " + rawData["StarID"])
 	
 	var	bars = d3.selectAll(".bar").data(data)
@@ -97,8 +97,8 @@ function updateBarchart(rawData, scaleEdges){
 			hideTooltip("bar")})
 	
 	bars.transition().duration(1000)
-		.attr("fill", "rgba(8, 81, 156, 0.6)")
-		.attr("stroke", "rgba(8, 81, 156, 0.6)")
+		.attr("fill", colour)
+		.attr("stroke", colour)
 		.attr("transform", "translate(0," + height + ")")
 		.attr("class","bar").attr("y",  function(d){
 			return - Math.abs(d["value"])

@@ -160,7 +160,7 @@ Picture of code is bit redundant because of github
 
 ![](doc/slider.JPG)
 
-# day 14
+# day 17
 
 ## Done
 	-	Interactivity done
@@ -175,3 +175,24 @@ Picture of code is bit redundant because of github
 ## Picture of current progress
 
 ![](doc/Bug.JPG)
+
+
+# day 18
+
+## Done
+	-	Lay-out done
+	-	Barcharts/ Radarchart have the colour of the star in the scatterplot
+	-	Scatterplot has proper colours
+	-	Navbar working
+
+
+## To Do
+	-	Write text
+
+
+## Picture of current progress
+
+![](doc/home.JPG)
+![](doc/scatter.JPG)
+![](doc/Charts.JPG)
+![](doc/about.JPG)

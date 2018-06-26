@@ -1,15 +1,15 @@
 // https://bl.ocks.org/alandunning/4c36eb1abdb248de34c64f5672afd857
 
-function makeRadarChart(rawData, scaleEdges){
+function makeRadarChart(rawData, scaleEdges, colour){
 
 	var variables = {
 		labels: ["Distance", "Time", "Magnitude", "Gas"],
 		increments: 5,
 		radians: Math.PI * 2,
-		width: 400,
-		height: 400,
-		extraWidth: 200,
-		extraHeight: 200
+		width: 300,
+		height: 300,
+		extraWidth: 150,
+		extraHeight: 100
 	}
 
 	var radius = Math.min(variables.width, variables.height) / 2
@@ -21,7 +21,7 @@ function makeRadarChart(rawData, scaleEdges){
 				      .attr("class", "tooltip")
 				      .style("opacity", 0);
 
-	var title = "Data about the relationship between Earth and star number " + rawData["StarID"];
+	var title = "Data about distance from Earth to star number 11" + rawData["StarID"];
 
 	svg.append("text")
 		.attr("x", (variables.width + variables.extraWidth) / 2)
@@ -98,18 +98,18 @@ function makeRadarChart(rawData, scaleEdges){
 							return d.map(function(d) {
 					            return [d.x, d.y].join(",")
 					    	}).join(" ")
-						}).style("fill-opacity", 0.5)
+						}).style("fill-opacity", 0.5).attr("fill", colour)
 
 	svg.selectAll(".circle").data(coordinates).enter().append("circle")
 		.attr("transform", "translate(" + (variables.width + variables.extraWidth) / 2 
 				+ "," + (variables.height + variables.extraHeight) / 2 + ")")
 		.attr("cx", function(d){ return d.x}).attr("cy", function(d){ return d.y})
-		.attr("r", 2).attr("class", "circle")
+		.attr("r", 2).attr("class", "circle").attr("fill", "grey")
 		.on("mouseover", function(d){
-			d3.select(this).attr("r", 10)
+			d3.select(this).attr("r", 10).style("opacity", 0.5)
 			showTooltip(d, rawData, "radar")
 		}).on("mouseout", function(d){
-			d3.select(this).attr("r", 2)
+			d3.select(this).attr("r", 2).style("opacity", 1)
 			hideTooltip("radar")
 		})
 
@@ -117,36 +117,33 @@ function makeRadarChart(rawData, scaleEdges){
 
 }
 
-function updateRadarChart(rawData, scaleEdges){
+function updateRadarChart(rawData, scaleEdges,colour){
 
 	$("#titleRadarChart").html("Data about the relationship between Earth and star number " + rawData["StarID"])
 	var radius = document.getElementById("radarRadius").getBoundingClientRect().height
 	var data = dataForD3(radius, rawData, scaleEdges, "radar")
 
-	var x = d3.scaleLinear().range([- radius, radius]);
-	var y = d3.scaleLinear().range([- radius, radius]);
-
 	var svg = d3.select("#radarchart").select("svg")
 
 	var coordinates = makeCoordinatesForPolygon(data)
 
-	svg.selectAll("polygon").data([coordinates])
+	var polygon = svg.selectAll("polygon").data([coordinates])
 		.transition().duration(1000)
 		.attr("points", function(d){
 			return d.map(function(d) {
 	            return [d.x, d.y].join(",")
 	        }).join(" ")
-		}).style("fill-opacity", 0.5)
+		}).style("fill-opacity", 0.5).attr("fill", colour)
 
 	var circles = svg.selectAll(".circle").data(coordinates)
 		.on("mouseover", function(d){
-			d3.select(this).attr("r", 10)
+			d3.select(this).attr("r", 10).style("opacity", 0.5)
 			showTooltip(d, rawData, "radar")
 		}).on("mouseout", function(d){
-			d3.select(this).attr("r", 2)
+			d3.select(this).attr("r", 2).style("opacity", 1)
 			hideTooltip("radar")
 		})
 	circles.transition().duration(1000)
 		.attr("cx", function(d){ return d.x}).attr("cy", function(d){ return d.y})
-		.attr("r", 2).attr("class", "circle")
+		.attr("r", 2).attr("class", "circle").attr("fill", "grey")
 }

@@ -15,43 +15,59 @@
     <script src="scripts/javascript/barchart.js"></script>
     <script src="scripts/javascript/radarchart.js"></script>
     <script src="scripts/javascript/helper.js"></script>
-    <script scr="scripts/javascript/dropdown.js"></script>
-    <script scr="scripts/javascript/slider.js"></script>
+    <script src="scripts/javascript/dropdown.js"></script>
+    <script src="scripts/javascript/slider.js"></script>
     <script src="scripts/javascript/main.js"></script>
 
 
     <link rel="stylesheet" href="scripts/css/eindproject.css">
   </head>
-  <body>
+  <body bgcolor="#E6E6FA">
 
-
-    <nav class="navbar navbar-inverse sticky-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Home</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li><a href="#">Page 1</a></li>
-          <li><a href="#">Page 2</a></li>
-          <li><a href="#">Page 3</a></li>
-        </ul>
-      </div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="Home">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="Scatterplot">Scatterplot</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="Charts">Charts</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="About">About</a>
+        </li>
+      </ul>
     </nav>
+    <section id="Home" class="content-section text-center">
 
-    <h1>Alwan Rashid (10580204)</h1>
+    </section>
 
-    <div id="container">
-      <div class="row">
-        <div class="col" id="scatter"></div>
-        <div class="col" id="dropdown"></div>
-        <div class="col" id="slider">
-            <a id="reset" href="#">Reset</a>
+    <section class="content-section text-center">
+      <div class="container" id="Scatterplot">
+        <div class="row">  
+          <div class="row">
+            <div class="col" id="scatter"></div>
+            <div class="col" id="dropdown"></div>
+            <div class="col" id="slider">
+                <a id="reset" href="#">Reset amount of stars</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col" id="barchart"></div>
-        <div class="col" id="radarchart"></div>
+    </section>
+    <section class="content-section text-center">
+      <div class="container" id="Charts">
+        <div class="row">
+          <div class="col" id="barchart"></div>
+          <div class="col" id="radarchart"></div>
+        </div>
       </div>
-    </div>
+    </section>
+    <section id="About" class="content-section text-center">
+          <h1>Alwan Rashid (10580204)</h1>
+
+    </section>
   </body>
 </html>

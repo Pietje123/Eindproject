@@ -8,8 +8,8 @@ reader = csv.DictReader(csvfile, fieldnames)
 jsonfile.write('[')
 del_row = ["HIP","HD","HR","Gliese","BayerFlamsteed","PMRA","PMDec","RV","X","Y","Z","VX","VY","VZ", "RA", "Dec", "ProperName"]
 count = 0
-datapoints = 1000
-d = 0
+datapoints = 998
+d = 1
 types = ['S', 'N', 'R', 'M', 'K', 'G', 'F', 'A', 'B', 'O', 'W']
 
 for row in reader:
@@ -30,7 +30,8 @@ for row in reader:
 
 	# Distance in kilometers instead of parsec
 	row["Distance"] = float(row["Distance"]) * 3.08567758 * 10 ** 13
-
+	row["StarID"] = d
+	d+=1
 
 	row["Time"] = float(row["Distance"]) / 24 / 365.25 / 3600
 	row["Gas"] = float(row["Distance"])  / 100 * 6.5

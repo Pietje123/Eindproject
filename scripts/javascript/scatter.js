@@ -23,11 +23,13 @@ function makeScatter(data, scaleEdges){
   							.domain([scaleEdges[xLabel]["max"], scaleEdges[xLabel]["min"]])
   							.interpolator(d3.interpolateRainbow);
 
+	makeBarchart(data[0], scaleEdges, sequentialScale(data[0]["ColorIndex"]))
+	makeRadarChart(data[0], scaleEdges, sequentialScale(data[0]["ColorIndex"]))
+
+
 	// can't go in function because of async of js
 	var starString = $("#barchartTitle").text().split(" ")
 	var StarID = starString[starString.length - 1]
-
-
 
 	var svg = d3.select("#scatter").append("svg")
 				.attr("width", width + margin.left + margin.right)
@@ -87,15 +89,16 @@ function makeScatter(data, scaleEdges){
 		})
 		.on("click", function(d){
 			$("html, body").animate({
-		        scrollTop: $("#barchart").offset().top}, "slow")
+		        scrollTop: $("#barchart").offset().top - 
+		        		$("nav").outerHeight()}, "slow")
 				.promise().done(function(){
 					
 				// can't go in function because of async of js
 				var starString = $("#barchartTitle").text().split(" ")
 				var StarID = starString[starString.length - 1]
-				changeStarColour(StarID, sequentialScale(d["ColorIndex"]))
-				updateBarchart(d, scaleEdges)
-				updateRadarChart(d, scaleEdges)
+				changeStarColour(StarID,sequentialScale(data[StarID -1]["ColorIndex"]))
+				updateBarchart(d, scaleEdges, sequentialScale(d["ColorIndex"]))
+				updateRadarChart(d, scaleEdges, sequentialScale(d["ColorIndex"]))
 				changeStarColour(d["StarID"], "black")
 			})
 		})
@@ -145,14 +148,16 @@ function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
 		})
 		.on("click", function(d){
 			$("html, body").animate({
-		        scrollTop: $("#barchart").offset().top}, "slow")
+		        scrollTop: $("#barchart").offset().top 
+		        		- $("nav").outerHeight()}, "slow")
 				.promise().done(function(){
 
 					// can't go in function because of async of js
 					var starString = $("#barchartTitle").text().split(" ")
 					var StarID = starString[starString.length - 1]
 
-					changeStarColour(StarID, sequentialScale(d["ColorIndex"]))
+					changeStarColour(StarID, 
+							sequentialScale(data[StarID - 1]["ColorIndex"]))
 					updateBarchart(d, scaleEdges)
 					updateRadarChart(d, scaleEdges)
 					changeStarColour(d["StarID"], "black")
@@ -169,6 +174,7 @@ function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
 		.attr("x", (width / 2))
 		.attr("y", 0 - (margin.top / 2))
 		.attr("text-anchor", "middle")
+		.attr("class", "title")
 		.attr("id", "title")
 		.style("font-size", "16px")
 		.style("text-decoration", "underline")
