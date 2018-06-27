@@ -41,31 +41,37 @@
       </ul>
     </nav>
     <section id="Home" class="content-section text-center">
-
+      <h2> This is a website for people who are interested in astronomy and would like
+        to see some data about stars visualized.</h2>
     </section>
 
-    <section class="content-section text-center">
+    <section class="content-section">
       <div class="container" id="Scatterplot">
         <div class="row">  
           <div class="col" id="scatter"></div>
           <div class="col">
             <div class="row">
-              <div class="col" id="dropdown"></div>
               <div class="col" id="slider">
                   <a id="reset" href="#">Reset amount of stars</a>
               </div>
+            </div>
+            <div class="row">
               <p>On the left is a scatterplot of <text id="AmountOfStars">1000</text>
                 stars, with <text id="xValue">ColorIndex</text> on the x-axis and 
                 <text id="yValue"> AbsMagnitude</text> on the y-axis. You can change the
                 variables using the dropdown menus. The amount of stars can be changed using
-                the slider. If you click on a star you get scrolled down to two charts with 
-                data about that star. The currently selected star black. The colors of the 
+                the slider. If you click on a star you get directed to two charts with 
+                data about that star. The currently selected star is black. The colors of the 
                 stars are an approximation of the light which it emits. Color index is used
-                to scale the data to all the visible light (a rainbow) </p>
+                to scale the data to all the visible light (a rainbow). </p>
+              <div id="xDropdownMenu" class="dropdownMenu"></div>
+            </div>
+            <div class="row">
               <p id="xText"> There are multiple colorindices, all of which are a ratio 
                 between two intensities of light. This colorindex is the ratio between 
                 blue light and visible light. Using the colorindex of a star astronomers 
                 can approximate the temperature of that star.</p>
+              <div id="yDropdownMenu" class="dropdownMenu"></div>
               <p id="yText"> The absolute magnitude (AbsMagnitude) is a way for astronomers
                 to compare different stars. It is a number to indicate the amount of light
                 one detects at a distance of 10 parsec (3.09 * 10^14 km). </p>
@@ -74,18 +80,32 @@
         </div>
       </div>
     </section>
-    <section class="content-section text-center">
+    <section class="content-section text-left">
       <div class="container" id="Charts">
         <div class="row">
           <div class="col" id="barchart"></div>
           <div class="col" id="radarchart"></div>
         </div>
-        <p> text</p>
+        <div class="row">
+          <p class="col">
+            This bar chart displays data about star <text id="starIdNumber">1</text>. The
+            barsize is scaled between the minimum and maximum of that variable in the 
+            scatterplot, with 0% being the minimum and 100% the maximum value. If you hover
+            over the bars it shows you the absolute value of that variable.  
+          </p>
+          <p class="col">
+            This radar chart displays data about star <text id="starIdNumber">1</text>. The
+            value is scaled between the minimum and maximum of that variable in the 
+            scatterplot, with 0% being the minimum and 100% the maximum value. If you hover
+            over the grey dots it shows you the absolute value of that variable. 
+          </p>
       </div>
     </section>
     <section id="About" class="content-section text-center">
-          <h1>Alwan Rashid (10580204)</h1>
-
+          <h2> This is a website built by Alwan Rashid in order to help people who want
+            to data about stars visualized and want see how different variables are 
+            plotted against each other. </h2>
+            <a id="data" href="http://www.astronexus.com/hyg" >Data</a>
     </section>
   </body>
 </html>

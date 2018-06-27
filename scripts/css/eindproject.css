@@ -67,7 +67,6 @@ body, html {
   display: table;
   width: 100vw;
   height: 100vh;
-  padding: 200px 0;
   text-align: center;
   color: white;
   background-color: white;
@@ -98,5 +97,18 @@ section{
 }
 
 p, #xValue, #yValue, #AmountOfStars {
-  font-size: 15px;
+  font-size: 13px;
+}
+
+a#data {
+  font-size: 30px;
+}
+
+h2{
+  padding: 200px;
+}
+
+.dropdownMenu{
+  margin-left: 35%;
+  padding: 5px;
 }

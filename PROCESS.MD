@@ -196,3 +196,22 @@ Picture of code is bit redundant because of github
 ![](doc/scatter.JPG)
 ![](doc/Charts.JPG)
 ![](doc/about.JPG)
+
+# day 19
+
+## Done
+	-	Improved lay-out 
+	-	Added comments, cleaned code
+	-	Wrote text
+
+
+## To Do
+	-	Perfecting repository 
+	-	Writing proces
+
+
+## Picture of current progress
+
+![](doc/charttext.JPG)
+![](doc/scattertext.JPG)
+
