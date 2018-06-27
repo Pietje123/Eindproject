@@ -4,6 +4,8 @@ rect:hover{
 
 
 .tooltip {
+  max-width: none;
+  white-space: nowrap;
   position: absolute;
   display: none;
   min-width: 80px;

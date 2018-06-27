@@ -158,8 +158,8 @@ function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
 
 					changeStarColour(StarID, 
 							sequentialScale(data[StarID - 1]["ColorIndex"]))
-					updateBarchart(d, scaleEdges)
-					updateRadarChart(d, scaleEdges)
+					updateBarchart(d, scaleEdges, sequentialScale(d["ColorIndex"]))
+					updateRadarChart(d, scaleEdges, sequentialScale(d["ColorIndex"]))
 					changeStarColour(d["StarID"], "black")
 
 				})

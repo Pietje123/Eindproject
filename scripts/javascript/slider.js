@@ -23,6 +23,9 @@ function makeSlider(data, scaleEdges){
 
   d3.select("#reset").on("click", function(){
   		slider.value(1000)
+		$("html, body").animate({
+        	scrollTop: $("#Scatterplot").offset().top 
+        		- $("nav").outerHeight()}, "slow")
   	});
 
 };

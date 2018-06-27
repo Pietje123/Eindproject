@@ -21,7 +21,7 @@ function makeRadarChart(rawData, scaleEdges, colour){
 				      .attr("class", "tooltip")
 				      .style("opacity", 0);
 
-	var title = "Data about distance from Earth to star number 11" + rawData["StarID"];
+	var title = "Data about distance from Earth to star number " + rawData["StarID"];
 
 	svg.append("text")
 		.attr("x", (variables.width + variables.extraWidth) / 2)
