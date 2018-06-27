@@ -59,8 +59,6 @@ function makeScatter(data, scaleEdges){
 		.attr("y", - (margin.top / 2))
 		.attr("text-anchor", "middle")
 		.attr("id", "title")
-		.style("font-size", "16px")
-		.style("text-decoration", "underline")
 		.text(title);
 
 	// y axis
@@ -176,8 +174,6 @@ function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
 		.attr("text-anchor", "middle")
 		.attr("class", "title")
 		.attr("id", "title")
-		.style("font-size", "16px")
-		.style("text-decoration", "underline")
 		.text(title);
 
 	d3.select(".xAxis").transition().duration(1000)

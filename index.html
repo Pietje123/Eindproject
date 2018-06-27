@@ -47,11 +47,28 @@
     <section class="content-section text-center">
       <div class="container" id="Scatterplot">
         <div class="row">  
-          <div class="row">
-            <div class="col" id="scatter"></div>
-            <div class="col" id="dropdown"></div>
-            <div class="col" id="slider">
-                <a id="reset" href="#">Reset amount of stars</a>
+          <div class="col" id="scatter"></div>
+          <div class="col">
+            <div class="row">
+              <div class="col" id="dropdown"></div>
+              <div class="col" id="slider">
+                  <a id="reset" href="#">Reset amount of stars</a>
+              </div>
+              <p>On the left is a scatterplot of <text id="AmountOfStars">1000</text>
+                stars, with <text id="xValue">ColorIndex</text> on the x-axis and 
+                <text id="yValue"> AbsMagnitude</text> on the y-axis. You can change the
+                variables using the dropdown menus. The amount of stars can be changed using
+                the slider. If you click on a star you get scrolled down to two charts with 
+                data about that star. The currently selected star black. The colors of the 
+                stars are an approximation of the light which it emits. Color index is used
+                to scale the data to all the visible light (a rainbow) </p>
+              <p id="xText"> There are multiple colorindices, all of which are a ratio 
+                between two intensities of light. This colorindex is the ratio between 
+                blue light and visible light. Using the colorindex of a star astronomers 
+                can approximate the temperature of that star.</p>
+              <p id="yText"> The absolute magnitude (AbsMagnitude) is a way for astronomers
+                to compare different stars. It is a number to indicate the amount of light
+                one detects at a distance of 10 parsec (3.09 * 10^14 km). </p>
             </div>
           </div>
         </div>
@@ -63,6 +80,7 @@
           <div class="col" id="barchart"></div>
           <div class="col" id="radarchart"></div>
         </div>
+        <p> text</p>
       </div>
     </section>
     <section id="About" class="content-section text-center">

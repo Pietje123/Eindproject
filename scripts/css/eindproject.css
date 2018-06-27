@@ -5,8 +5,6 @@ rect:hover{
 
 .tooltip {
   max-width: none;
-  white-space: nowrap;
-  position: absolute;
   display: none;
   min-width: 80px;
   height: auto;
@@ -15,6 +13,11 @@ rect:hover{
   padding: 14px;
   text-align: center;
   font-size: small;
+}
+
+#scatterTooltip, #barTooltip {
+  white-space: nowrap;
+  position: absolute;
 }
 
 .ticks {
@@ -62,8 +65,8 @@ body, html {
     /* The image used */
   background: url("../../img/home.jpg") no-repeat bottom center scroll;
   display: table;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   padding: 200px 0;
   text-align: center;
   color: white;
@@ -78,8 +81,8 @@ body, html {
     /* The image used */
   background: url("../../img/about.jpg") no-repeat bottom center scroll;
   display: table;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   text-align: center;
   color: white;
   background-color: white;
@@ -94,7 +97,6 @@ section{
   height: 100vh;
 }
 
-
-.title{
-
+p, #xValue, #yValue, #AmountOfStars {
+  font-size: 15px;
 }

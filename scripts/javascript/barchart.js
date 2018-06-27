@@ -1,6 +1,6 @@
 function makeBarchart(rawData, scaleEdges, colour){
 
-	var labels = ["AbsMagnitude","Spectrum","Velocity","ColorIndex", "Temperature"];
+	var labels = ["Temperature","Spectrum","AbsMagnitude","Velocity", "ColorIndex"];
 
 	var margin = {top: 40, right: 20, bottom: 50, left: 50},
 		width = labels.length * 100 - margin.left - margin.right,
@@ -33,7 +33,7 @@ function makeBarchart(rawData, scaleEdges, colour){
 	
 	// add labels
 	svg.selectAll("text.axis").data(labels).enter().append("text").attr("class","barLabel")
-			.attr("transform", "translate(0," + height + ")")
+			.attr("transform", "translate(0," + height + ")").style("font-size", "13px")
 			.attr("y", margin.bottom / 2).attr("id", function(d){ return d.split(' ').join('')})
 			.attr("x", function(d,i){
 				return (width  - (i + .5) * barWidth * 2)
@@ -45,8 +45,6 @@ function makeBarchart(rawData, scaleEdges, colour){
 		.attr("y", 0 - (margin.top / 2))
 		.attr("text-anchor", "middle")
 		.attr("id", "barchartTitle")
-		.style("font-size", "16px")
-		.style("text-decoration", "underline")
 		.text("Data of star number " + rawData["StarID"]);
 
 	// add the bar

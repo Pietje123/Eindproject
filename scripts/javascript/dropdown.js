@@ -3,7 +3,7 @@ function makeDropdown(labels, data, scaleEdges){
 	axes.forEach(function(axis){
 		var div = d3.select("#dropdown").append("div")
 		
-		div.append("text").text("The current " + axis + " variable is: ")
+		div.append("text").text("The current " + axis + " variable is: ").style("font-size", "13px")
 		var dropdown = div.append("div")
 						.attr("class","dropdown").attr("id", axis + "Dropdown")
 		dropdown.append("button").attr("class", "btn btn-primary dropdown-toggle")
@@ -26,6 +26,7 @@ function changeDropdown(data, scaleEdges) {
 	var xLabel = labels[0];
 	var yLabel = labels[1];
 	var colourIndex = scaleEdges["ColorIndex"]
+	changeLabelsInText(xLabel,yLabel)
 	
 	var amountOfStars = Number($(".parameter-value").text())
 	if (amountOfStars < 1000){

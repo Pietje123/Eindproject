@@ -11,6 +11,7 @@ function makeSlider(data, scaleEdges){
 			    .on('onchange', function(d){
 			    				sliderUpdatePlots(data.slice(0, Math.round(d)), maxStars - Math.round(d),
 			    					scaleEdges["ColorIndex"])
+			    				$("#AmountOfStars").text(d)
 			    		});
 
   var g = d3.select("#slider").append("svg")

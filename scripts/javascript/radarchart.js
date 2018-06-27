@@ -28,8 +28,6 @@ function makeRadarChart(rawData, scaleEdges, colour){
 		.attr("y", variables.extraHeight / 4)
 		.attr("text-anchor", "middle")
 		.attr("id", "titleRadarChart")
-		.style("font-size", "16px")
-		.style("text-decoration", "underline")
 		.text(title);
 
 	for (let i = 0; i < variables.increments; i++){
