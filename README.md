@@ -31,11 +31,15 @@ Lastly there is the navigation bar, which will redirect you to home, the scatter
 
 ## Used libraries 
 
-	-[Bootstrap css](https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css) ([LICENSE](https://github.com/twbs/bootstrap/blob/master/LICENSE))
-	-[Bootstrap js](https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js) ([LICENSE](https://github.com/twbs/bootstrap/blob/master/LICENSE))
-	-[Dropdown helper](https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js) ([LICENSE](https://opensource.org/licenses/MIT))
-	-[D3 version 4](https://d3js.org/d3.v4.min.js) ([LICENSE](https://github.com/d3/d3/blob/master/LICENSE))
-	-[Slider](https://unpkg.com/d3-simple-slider@0.2.1/build/d3-simple-slider.js) ([LICENSE](https://github.com/johnwalley/d3-simple-slider/blob/master/LICENSE))
+[Bootstrap css](https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css) ([LICENSE](https://github.com/twbs/bootstrap/blob/master/LICENSE))
+
+[Bootstrap js](https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js) ([LICENSE](https://github.com/twbs/bootstrap/blob/master/LICENSE))
+
+[Dropdown helper](https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js) ([LICENSE](https://opensource.org/licenses/MIT))
+
+[D3 version 4](https://d3js.org/d3.v4.min.js) ([LICENSE](https://github.com/d3/d3/blob/master/LICENSE))
+
+[Slider](https://unpkg.com/d3-simple-slider@0.2.1/build/d3-simple-slider.js) ([LICENSE](https://github.com/johnwalley/d3-simple-slider/blob/master/LICENSE))
 
 
 Copyright © 2018 Alwan Rashid
