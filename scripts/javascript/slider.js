@@ -5,11 +5,16 @@ https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
 Alwan Rashid (10580204)
 */
 
-
-function makeSlider(data, scaleEdges){
 /*
 This function makes a slider dependant on data
-*/    
+
+@data {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+No return
+*/  
+
+function makeSlider(data, scaleEdges){
+  
     // max of slider is length of data
     var maxStars = data.length
 
@@ -46,13 +51,17 @@ This function makes a slider dependant on data
             scrollTop: $("#Scatterplot").offset().top 
                 - $("nav").outerHeight()}, "slow")
         });
-
 };
 
-function sliderUpdateScatterplot(data, otherStarsInt, colourIndex){
 /*
 This function updates the plots when the slider is changed
-*/
+
+@data {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+No return
+*/  
+
+function sliderUpdateScatterplot(data, otherStarsInt, colourIndex){
     
     // get the current scatterplot labels
     var scatterLabels = getLabelsScatterplot();
@@ -77,5 +86,4 @@ This function updates the plots when the slider is changed
     }
 
     updateScatter(data, scaleEdges, xLabel, yLabel, colourIndex);
-
 };

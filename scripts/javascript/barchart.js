@@ -4,11 +4,17 @@ made by
 Alwan Rashid (10580204)
 */
 
-
-function makeBarchart(rawData, scaleEdges, colour){
 /*
 This function makes a barchart with bars in a colour
+
+@rawData {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+@colour {RGB value} arg colour of the bars
+No return
 */
+
+function makeBarchart(rawData, scaleEdges, colour){
+
     var labels = ["Temperature","Spectrum","AbsMagnitude","Velocity", "ColorIndex"];
 
     var margin = {top: 40, right: 20, bottom: 50, left: 50},
@@ -107,11 +113,17 @@ This function makes a barchart with bars in a colour
                     });
 };
 
-
-function updateBarchart(rawData, scaleEdges, colour){
 /*
 This function updates the bars of the previous function
+
+@rawData {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+@colour {RGB value} arg colour of the bars
+No return
 */
+
+function updateBarchart(rawData, scaleEdges, colour){
+
     var barWidth = document.getElementById("barAbsMagnitude").getAttribute("width");
     var dimensions = getDimensionsFromTranslation(document.getElementById("barAbsMagnitude"));
     var width = dimensions[0],

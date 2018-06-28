@@ -4,8 +4,17 @@ This script makes a dropdown menu using bootstrap
 Alwan Rashid (10580204)
 */
 
+/*
+This function makes a dropdownmenu
+
+@labels {array} arg labels of the dropdownmenu buttons
+@data {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of data
+No return
+*/
 
 function makeDropdown(labels, data, scaleEdges){
+
     var axes = ["x", "y"];
     axes.forEach(function(axis){
 
@@ -52,10 +61,15 @@ function makeDropdown(labels, data, scaleEdges){
     $("#yButton").text("AbsMagnitude");
 };
 
-function changeDropdown(data, scaleEdges) {
 /*
-This function manages the data so it can be put in the upgradeScatter function
+This function prepares data to be put in updateScatter
+
+@data {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of data
+No return
 */
+
+function changeDropdown(data, scaleEdges) {
 
     var labels = getLabelsScatterplot();
     var xLabel = labels[0];
@@ -73,6 +87,5 @@ This function manages the data so it can be put in the upgradeScatter function
         var scaleEdges = getMinMax(data,labels)
     }
 
-    updateScatter(data, scaleEdges, xLabel, yLabel, colourIndex)
-    
+    updateScatter(data, scaleEdges, xLabel, yLabel, colourIndex);   
 };

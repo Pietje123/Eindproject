@@ -4,11 +4,19 @@ made by
 Alwan Rashid (10580204)
 */
 
-function dataForD3(maxLength, rawData, scaleEdges, plot){
 /*
 Alter rawdata in to data relative to maxLength
-and return it in a dict
+and return it in a JSON
+
+@maxLength {int} arg Integer to which the data needs to be scaled
+@rawData {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+@plot {string} arg Of which plot it needs to get the labels
+return {JSON} arg JSON with scaled values 
 */
+
+function dataForD3(maxLength, rawData, scaleEdges, plot){
+
     // get the labels of the required plot
     var labels = document.getElementsByClassName(plot + "Label");
     var d3Data = [];
@@ -31,13 +39,18 @@ and return it in a dict
     return d3Data;
 };
 
-function getMinMax(data, labels){
 /*
 This function puts the min / max of a json array and puts it in a json
 with as keys the variable
-*/
-    var scaleEdges = {};
 
+@data {JSON array} arg Data
+@labels {array} arg Of which the minimum and maximum data needs to searched
+returns {JSON} arg Minimum and maximum values of data
+*/
+
+function getMinMax(data, labels){
+
+    var scaleEdges = {};
 
     labels.forEach(function(label){
         // get max
@@ -57,12 +70,16 @@ with as keys the variable
     return scaleEdges;
 };
 
-
-function makeCoordinatesForPolygon(data){
 /*
 This function calculates the x and y coordinates of a regular polygon
 and adds the label of that variable
+
+@data {JSON array} arg Data
+return {JSON array} arg Data to be used in a radarchart
 */
+
+function makeCoordinatesForPolygon(data){
+
     var coordinates = []
     for (i = 0; i < data.length; i++){
 
@@ -76,10 +93,17 @@ and adds the label of that variable
     return coordinates;    
 };
 
-function showTooltip(dot, rawData, plot){
 /*
 This function makes the text for the tooltips of the bar and radar charts
+
+@dot {JSON} arg Data from d3Data
+@rawData {JSON array} arg Data
+@plot {string} arg Of which plot it needs to get the labels
+no return
 */
+
+function showTooltip(dot, rawData, plot){
+
     var types = ["S", "N", "R", "M", "K", "G", "F", "A", "B", "O", "W"];
 
     var title;
@@ -144,10 +168,15 @@ This function makes the text for the tooltips of the bar and radar charts
     
 };
 
-function hideTooltip(plot){
 /*
 This function hides the tooltip of the radar and bar charts
-*/    
+
+@plot {string} arg Of which plot it needs to get the labels
+no return
+*/  
+
+function hideTooltip(plot){
+  
     // change position and make it invisible
     d3.select("#" + plot + "Tooltip")
         .style("opacity", 0)
@@ -156,10 +185,15 @@ This function hides the tooltip of the radar and bar charts
         .style("display", "inline-block");
 };
 
-function showTooltipScatterplot(data){
 /*
 This function makes the text of the tooltip for the scatterplot
+
+@data {JSON} arg Data
+no return
 */
+
+function showTooltipScatterplot(data){
+
     // get the current labels ofthe scatterplot
     var labels = getLabelsScatterplot();
     var xLabel = labels[0];
@@ -178,13 +212,17 @@ This function makes the text of the tooltip for the scatterplot
         .style("display", "inline-block");
 };
 
-
-function getDimensionsFromTranslation(element){
 /*
 This function get the width and height from a translation
 
 translate(123,321) => [123,321]
+
+@element {hmtlelement} arg This is htmlelement
+return {array} 
 */
+
+function getDimensionsFromTranslation(element){
+
     // get the transform and split it at "," 
     // returns a string
     var elements = element.getAttribute("transform").split(",")
@@ -208,53 +246,71 @@ translate(123,321) => [123,321]
     return [width, height];
 };
 
-function getLabels(data){
 /*
 This function gets the keys of an object and puts "StarID"
 at the first spot
+
+return {array} arg Keys of the data
 */
+
+function getLabels(data){
+
     var labels = Object.keys(data);
     labels.splice( labels.indexOf("StarID"), 1 );
 
     return labels;
 };
 
-function getLabelsScatterplot(){
 /*
 This function gets the current labels of the scatterplot
+
+return {array} arg With current labels of dropdownmenus
 */
+
+function getLabelsScatterplot(){
+
     var xLabel = $("#xButton").text();
     var yLabel = $("#yButton").text();
     return [xLabel, yLabel];
 };
 
-function changeStarColour(id, colour){
 /*
 This function changes the colour of an html element using
 its id
+
+@id {string} arg Way to identify the element
+@colour {RGB value} arg To have optional colour
+no return
 */
+
+function changeStarColour(id, colour){
+
     $("#" + id).css("fill", colour);
 };
 
-
-function getCurrentStar(){
 /*
 This function gets the StarID of the currently shows data 
 in the bar/radar chart
+
+return {string}
 */
+
+function getCurrentStar(){
+
     var starString = $("#barchartTitle").text().split(" ");
     return starString[starString.length - 1];
 
 };
 
-
-function navBarOnClick(){
 /*
 This function scrolls to a specific id 
 
 inspiration by
 https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link/7717625
 */
+
+function navBarOnClick(){
+
     // the top of the shown part is behind the navbar so it needs to scroll a bit further
     var navHeight = $("nav").outerHeight();
     $(function() {
@@ -267,11 +323,16 @@ https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-an
     });
 };
 
-
-function changeLabelsInText(xLabel,yLabel){
 /*
 This function changes the html page with new texts
+
+@xLabel {string} arg xLabel of scatterplot
+@yLabel {string} arg yLabel of scatterplot
+no return
 */
+
+function changeLabelsInText(xLabel,yLabel){
+
     xLabel = addDimensionAndText(xLabel);
     yLabel = addDimensionAndText(yLabel);
     $("#xValue").text(xLabel[0]);
@@ -280,10 +341,15 @@ This function changes the html page with new texts
     $("#yText").text(yLabel[1]);
 }
 
-function addDimensionAndText(label){
 /*
-This return a different unit and text for each label
+This return a different unit and text for each label. This text is used for the html
+
+@label {string} arg Label of something
+return {array} arg [Label + unit, text]
 */
+
+function addDimensionAndText(label){
+
     var text;
     switch(label){
         case "Temperature":

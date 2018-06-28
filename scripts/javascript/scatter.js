@@ -12,12 +12,15 @@ Alwan Rashid (10580204)
 
 */
 
-
-function makeScatter(data, scaleEdges){
 /*
 This function makes a scatterplot
+
+@data {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+No return 
 */
 
+function makeScatter(data, scaleEdges){
 
     var margin = {top: 40, right: 20, bottom: 50, left: 80},
         width = 600 - margin.left - margin.right,
@@ -78,7 +81,6 @@ This function makes a scatterplot
         .attr("class", "xAxis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis.ticks(9).tickFormat(d3.format(".1e")));
-
 
     // title
     svg.append("text")
@@ -142,11 +144,18 @@ This function makes a scatterplot
     changeStarColour(StarID, "black");
 };
 
-
-function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
 /*
 This function updates the scatterplot
+
+@data {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+@xLabel {string} arg xLabel of scatterplot
+@yLabel {string} arg yLabel of scatterplot
+@colourScale {d3object} arg it is to give a colour within a range
+No return 
 */
+
+function updateScatter(data, scaleEdges, xLabel, yLabel, colourScale){
     
     d3.select("#title")
         .remove();

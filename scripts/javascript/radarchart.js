@@ -5,10 +5,18 @@ https://bl.ocks.org/alandunning/4c36eb1abdb248de34c64f5672afd857
 made by
 Alwan Rashid (10580204)
 */
-function makeRadarChart(rawData, scaleEdges, colour){
+
 /*
 This function makes a radar chart in a colour
+
+@rawData {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+@colour {RGB value} arg colour of the bars
+No return
 */
+
+function makeRadarChart(rawData, scaleEdges, colour){
+
     // declare some variables
     var variables = {
         labels: ["Distance", "Time", "Magnitude", "Gas"],
@@ -189,10 +197,17 @@ This function makes a radar chart in a colour
         });
 };
 
-function updateRadarChart(rawData, scaleEdges,colour){
 /*
 This function updates the radar chart
+
+@rawData {JSON array} arg Data
+@scaleEdges {JSON} arg Minimum and maximum value of rawData
+@colour {RGB value} arg colour of the bars
+No return
 */
+
+function updateRadarChart(rawData, scaleEdges,colour){
+
     // change title
     $("#titleRadarChart").html("Data about the relationship between Earth and star number " + rawData["StarID"])
     
