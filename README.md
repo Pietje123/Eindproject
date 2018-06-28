@@ -1,54 +1,47 @@
-[PAGES](https://Pietje123.github.io/eindproject/index.html)
+[Finished Site](https://Pietje123.github.io/Eindproject/index.html)
 
 
-# Eindproject
+# Eindproject -- Stars
 
-Alwan Rashid (10580204)
+## Alwan Rashid (10580204)
+ 
+The goal of this project is to give people the opportunity to experiment with a few 
+variables of stars and see how those interact with each other and try to give the 
+general public a sense of why astronomical has its meaning.
 
+# The site itself
 
-Problem statement:
+![](doc/clickablescatterplot.jpg)
 
-Deze visualisatie tracht de gebruiker een beter beeld te geven van ontdekte sterren. Het is gericht op mensen die weinig of geen idee hebben hoeveel sterren er zijn en hoe deze zich tot elkaar verhouden.
+First of is the scatterplot, every dot represents a star. If you hover over the 
+star, the star gets bigger and a tooltip tells you something about that star. All
+the stars are clickable and will redirect you to the bar and radar charts. These 
+will display data about that star
 
-Solution:
+![](doc/htmlinteractive.jpg)
 
-Een scatterplot en als je over een ster hovert dan krijg je de naam mits deze bekend is, anders de ster ID. Als er wordt geklikt op een ster dan wordt er een barchart gemaakt met data (AbsMag, Colorindex,Spectrum,Velocity). Als derde visualizatie wordt een radar chart gemaakt van de afstand tot de ster, de hoeveelheid benzine die een Fiat Panda (0.9TwinAir MT-5 63 kW/85 pk 4X4) nodig heeft om die afstand af te leggen, de tijd die de auto nodig heeft (met 100 km/h)en de (schijnbare) magnitude.
-In de scatterplot kan worden gekozen om slechts bepaalde type sterren te laten zien. Ook kan er worden gekozen om alleen sterren vanaf / tot een bepaalde afstand te laten zien.
+Next to the scatterplot are a slider and two dropdownmenus. With the slider you
+can change the amount of stars which are in the scatterplot. The dropdownmenus
+are used to change the x- and y-variables.
 
-Main features:
+![](doc/finishedbarchart.jpg)
 
-	- scatterplot (op de y-as de absolute magnitude en de kleurindex of het type ster op de x-as)
-	- barchart (de absolute magnitude, kleurindex, type ster en de snelheid)
-	- radar chart (afstand, hoeveelheid benzine, tijd, schijnbare magnitude)
+This bar chart will update if you click on a star and change color according to the
+color of the star. If you hover above a bar, a tooltip will tell you something about
+that variable.
 
-Allemaal zijn mvp
+![](doc/finishedradarchart.jpg)
 
-Visualitatie:
+This radar chart will update if you click on a star and change color according to the
+color of the star. If you hover on a dot, a tooltip will tell something about that
+variable.
 
-![](doc/proposal.jpg)
+![](doc/navbar.jpg)
 
-Dataset:
-
-http://www.astronexus.com/hyg (versie 2)
-hoogst waarschijnlijk moet ik de dataset veranderen omdat ik de data graag op mijn manier wil hebben.
-
-External components:
-
-	- d3
-	- d3-tip
-	- bootstrap
-	- queue
-
-Simular:
-
-http://astro.unl.edu/mobile/HRdiagram/HRdiagramStable.html
-
-	Nadelen:
-
-		- Laad geen data van sterren zien
+Lastly there is the navigation bar, which will redirect you to home, the scatterplot,
+the charts or the about.
 
 
-Hardest Parts:
+Copyright © 2018 Alwan Rashid
 
-	- Derde visualizatie bedenken
-	- Data naar wens omzetten
+Everyone is free to use any of the code
