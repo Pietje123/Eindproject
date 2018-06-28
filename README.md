@@ -11,32 +11,32 @@ general public a sense of why astronomical has its meaning.
 
 # The site itself
 
-![](doc/clickablescatterplot.jpg)
+![](doc/clickablescatterplot.JPG)
 
 First of is the scatterplot, every dot represents a star. If you hover over the 
 star, the star gets bigger and a tooltip tells you something about that star. All
 the stars are clickable and will redirect you to the bar and radar charts. These 
 will display data about that star
 
-![](doc/htmlinteractive.jpg)
+![](doc/htmlinteractive.JPG)
 
 Next to the scatterplot are a slider and two dropdownmenus. With the slider you
 can change the amount of stars which are in the scatterplot. The dropdownmenus
 are used to change the x- and y-variables.
 
-![](doc/finishedbarchart.jpg)
+![](doc/finishedbarchart.JPG)
 
 This bar chart will update if you click on a star and change color according to the
 color of the star. If you hover above a bar, a tooltip will tell you something about
 that variable.
 
-![](doc/finishedradarchart.jpg)
+![](doc/finishedradarchart.JPG)
 
 This radar chart will update if you click on a star and change color according to the
 color of the star. If you hover on a dot, a tooltip will tell something about that
 variable.
 
-![](doc/navbar.jpg)
+![](doc/navbar.JPG)
 
 Lastly there is the navigation bar, which will redirect you to home, the scatterplot,
 the charts or the about.
