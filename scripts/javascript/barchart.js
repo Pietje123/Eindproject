@@ -117,7 +117,6 @@ This function updates the bars of the previous function
 	var width = dimensions[0],
 		height = dimensions[1];
 
-
 	// alter data so it's easier to put in a barchart
 	var data = dataForD3(height, rawData, scaleEdges, "bar");
 

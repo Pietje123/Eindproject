@@ -44,6 +44,7 @@ This function makes a scatterplot
   							.interpolator(d3.interpolateRainbow);
 
   	// make the bar and radar chart
+  	// couldn't do it in the main since it needed the colorcode
 	makeBarchart(data[0], scaleEdges, sequentialScale(data[0]["ColorIndex"]));
 	makeRadarChart(data[0], scaleEdges, sequentialScale(data[0]["ColorIndex"]));
 
@@ -172,8 +173,8 @@ This function updates the scatterplot
 	yScale.domain([scaleEdges[yLabel]["min"] - 0.1, scaleEdges[yLabel]["max"] + 0.1]);
 
 	var sequentialScale = d3.scaleSequential()
-  							.domain([colourScale["max"], colourScale["min"]])
-  							.interpolator(d3.interpolateRainbow);
+								.domain([colourScale["max"], colourScale["min"]])
+								.interpolator(d3.interpolateRainbow);
 
 	var title = yLabel + " vs " + xLabel;
 
