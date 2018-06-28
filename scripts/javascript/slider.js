@@ -21,7 +21,7 @@ This function makes a slider dependant on data
                     .step(1)
                     .default(1000)
                     .on('onchange', function(d){
-                                    sliderUpdatePlots(data.slice(0, d), maxStars - d,
+                                    sliderUpdateScatterplot(data.slice(0, d), maxStars - d,
                                         // get the appropiate colour
                                         scaleEdges["ColorIndex"])
 
@@ -49,7 +49,7 @@ This function makes a slider dependant on data
 
 };
 
-function sliderUpdatePlots(data, otherStarsInt, colourIndex){
+function sliderUpdateScatterplot(data, otherStarsInt, colourIndex){
 /*
 This function updates the plots when the slider is changed
 */
